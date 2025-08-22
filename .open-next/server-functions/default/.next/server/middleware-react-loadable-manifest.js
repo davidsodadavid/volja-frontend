@@ -1,0 +1,1 @@
+self.__REACT_LOADABLE_MANIFEST='{"../node_modules/@medusajs/ui/dist/esm/components/code-block/code-block.js -> prismjs/components/prism-json":{"id":33523,"files":["static/chunks/3523.2faa15900187fa47.js"]}}';

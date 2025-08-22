@@ -1,0 +1,96 @@
+{
+  "version": 4,
+  "routes": {
+    "/opengraph-image.jpg": {
+      "initialHeaders": {
+        "cache-control": "public, immutable, no-transform, max-age=31536000",
+        "content-type": "image/jpeg",
+        "x-next-cache-tags": "_N_T_/layout,_N_T_/opengraph-image.jpg/layout,_N_T_/opengraph-image.jpg/route,_N_T_/opengraph-image.jpg"
+      },
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/opengraph-image.jpg",
+      "dataRoute": null,
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    },
+    "/twitter-image.jpg": {
+      "initialHeaders": {
+        "cache-control": "public, immutable, no-transform, max-age=31536000",
+        "content-type": "image/jpeg",
+        "x-next-cache-tags": "_N_T_/layout,_N_T_/twitter-image.jpg/layout,_N_T_/twitter-image.jpg/route,_N_T_/twitter-image.jpg"
+      },
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "initialRevalidateSeconds": false,
+      "srcRoute": "/twitter-image.jpg",
+      "dataRoute": null,
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    }
+  },
+  "dynamicRoutes": {
+    "/[countryCode]/collections/[handle]": {
+      "experimentalBypassFor": [
+        {
+          "type": "header",
+          "key": "Next-Action"
+        },
+        {
+          "type": "header",
+          "key": "content-type",
+          "value": "multipart/form-data;.*"
+        }
+      ],
+      "routeRegex": "^/([^/]+?)/collections/([^/]+?)(?:/)?$",
+      "dataRoute": "/[countryCode]/collections/[handle].rsc",
+      "fallback": null,
+      "dataRouteRegex": "^/([^/]+?)/collections/([^/]+?)\\.rsc$",
+      "allowHeader": [
+        "host",
+        "x-matched-path",
+        "x-prerender-revalidate",
+        "x-prerender-revalidate-if-generated",
+        "x-next-revalidated-tags",
+        "x-next-revalidate-tag-token"
+      ]
+    }
+  },
+  "notFoundRoutes": [],
+  "preview": {
+    "previewModeId": "8cb5e91639af859a48026add1ef231d5",
+    "previewModeSigningKey": "f9dfbf6b5d64a6422a8d0d672f8b54760506f53aecdf8854c0d941bab382b5fa",
+    "previewModeEncryptionKey": "3c8098e19fa3a1a0395e3f226472f8a612a64338f283cfd830e68a62974c15cb"
+  }
+}
