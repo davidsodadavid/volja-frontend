@@ -10,12 +10,22 @@ import SkeletonRelatedProducts from "@modules/skeletons/templates/skeleton-relat
 import { notFound } from "next/navigation"
 import ProductActionsWrapper from "./product-actions-wrapper"
 import { HttpTypes } from "@medusajs/types"
+import ProductTable from "@modules/products/components/product-sizechart"
 
 type ProductTemplateProps = {
   product: HttpTypes.StoreProduct
   region: HttpTypes.StoreRegion
   countryCode: string
 }
+
+type TableProps = {
+  table: {
+    rowHeaders: string[]
+    colHeaders: string[]
+    data: string[][]
+  }
+}
+
 
 const ProductTemplate: React.FC<ProductTemplateProps> = ({
   product,
@@ -26,21 +36,28 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
     return notFound()
   }
 
-  const bgColorMap = {
-    '1001': 'bg-red-500',
-    '1002': 'bg-blue-500',
-    '1003': 'bg-green-500',
-  };
-
   return (
     <>
       <div
-         style={{ backgroundColor: product.hs_code ?? undefined }} className="content-container flex flex-col small:flex-row small:items-start py-6 relative"
+        style={{ backgroundColor: (product.metadata?.colors as { hex: string, name: string }[])?.[0]?.hex ?? "000" }} className="content-container flex flex-col small:flex-row small:items-start py-6 relative"
         data-testid="product-container"
       >
         <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[400px] w-full py-8 gap-y-6">
           <ProductInfo product={product} />
+        </div>
+        <div className="block w-full relative">
+          <ImageGallery images={product?.images || []} />
+        </div>
+        <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[400px] w-full py-8 gap-y-6">
           <ProductTabs product={product} />
+          
+          <ProductTable
+            table={product.metadata?.table as {
+              rowHeaders: string[]
+              colHeaders: string[]
+              data: string[][]
+            }}
+          />
           <ProductOnboardingCta />
           <Suspense
             fallback={
@@ -51,11 +68,9 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
               />
             }
           >
+
             <ProductActionsWrapper id={product.id} region={region} />
           </Suspense>
-        </div>
-        <div className="block w-full relative">
-          <ImageGallery images={product?.images || []} />
         </div>
       </div>
       <div

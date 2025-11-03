@@ -6,6 +6,7 @@ type ProductInfoProps = {
   product: HttpTypes.StoreProduct
 }
 
+
 const ProductInfo = ({ product }: ProductInfoProps) => {
   return (
     <div id="product-info">
@@ -25,12 +26,22 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
         >
           {product.title}
         </Heading>
+        <Heading
+          level="h3"
+          className="text-2xl leading-10 text-ui-fg-base"
+          data-testid="product-title"
+        >
+          {product.subtitle}
+        </Heading>
 
         <Text
           className="text-medium text-ui-fg-subtle whitespace-pre-line"
           data-testid="product-description"
         >
-          {product.description}
+          {product.description
+            ?.split('\n')
+            .map((line, index) => `- ${line}`)
+            .join('\n')}
         </Text>
       </div>
     </div>

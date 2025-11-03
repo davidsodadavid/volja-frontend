@@ -70,6 +70,8 @@ export default function ProductActions({
     })
   }, [product.variants, options])
 
+
+
   // check if the selected variant is in stock
   const inStock = useMemo(() => {
     // If we don't manage inventory, we can always add to cart
@@ -89,7 +91,6 @@ export default function ProductActions({
     ) {
       return true
     }
-
     // Otherwise, we can't add to cart
     return false
   }, [selectedVariant])
@@ -115,6 +116,7 @@ export default function ProductActions({
 
   return (
     <>
+      <ProductPrice product={product} variant={selectedVariant} />
       <div className="flex flex-col gap-y-2" ref={actionsRef}>
         <div>
           {(product.variants?.length ?? 0) > 1 && (
@@ -138,8 +140,6 @@ export default function ProductActions({
           )}
         </div>
 
-        <ProductPrice product={product} variant={selectedVariant} />
-
         <Button
           onClick={handleAddToCart}
           disabled={
@@ -149,7 +149,8 @@ export default function ProductActions({
             isAdding ||
             !isValidVariant
           }
-          style={{ color: product.hs_code ?? "#000" }}
+          
+          style={{ color: (product.metadata?.colors as { hex: string, name: string }[])?.[0]?.hex ?? "#000" }}
           variant="primary"
           className="w-full h-10 bg-black"
           isLoading={isAdding}
@@ -158,8 +159,8 @@ export default function ProductActions({
           {!selectedVariant && !options
             ? "Select variant"
             : !inStock || !isValidVariant
-              ? "Out of stock"
-              : "PREORDER"}
+              ? "Select variant"
+              : "PURCHASE"}
         </Button>
         <MobileActions
           product={product}

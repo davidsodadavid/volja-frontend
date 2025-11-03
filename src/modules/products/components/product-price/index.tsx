@@ -28,8 +28,8 @@ export default function ProductPrice({
           "text-ui-fg-interactive": selectedPrice.price_type === "sale",
         })}
       >
-        {!variant && "From "}
-        <span
+        {!variant}
+        <span className="text-xl-semi text-black"
           data-testid="product-price"
           data-value={selectedPrice.calculated_price_number}
         >
@@ -39,7 +39,6 @@ export default function ProductPrice({
       {selectedPrice.price_type === "sale" && (
         <>
           <p>
-            <span className="text-ui-fg-subtle">Original: </span>
             <span
               className="line-through"
               data-testid="original-product-price"
@@ -48,9 +47,9 @@ export default function ProductPrice({
               {selectedPrice.original_price}
             </span>
           </p>
-          <span className="text-ui-fg-interactive">
+          {/* percentage difference medusa built in <span className="text-ui-fg-interactive">
             -{selectedPrice.percentage_diff}%
-          </span>
+          </span> */}
         </>
       )}
     </div>
