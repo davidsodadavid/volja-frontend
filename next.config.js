@@ -39,6 +39,10 @@ const nextConfig = {
       { protocol: "https",
         hostname: "api.ateljevolja.si" 
       },
+      {
+        protocol: "https",
+        hostname: "r2.ateljevolja.si"
+      }
     ],
   },
 }
