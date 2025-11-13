@@ -132,7 +132,7 @@ const Payment = ({
     try {
       await initiatePaymentSession(cart, {
         // TODO: change the provider ID if using a different ID in medusa-config.ts
-        provider_id: "stripe",
+        provider_id: "pp_stripe_stripe",
       })
     } catch (err) {
       console.error("Failed to initialize Stripe session:", err)

@@ -78,7 +78,7 @@ const StripePaymentButton = ({
   const pathname = usePathname()
   const paymentSession = cart.payment_collection?.payment_sessions?.find(
     // TODO change the provider_id if using a different ID in medusa-config.ts
-    (session) => session.provider_id === "stripe"
+    (session) => session.provider_id === "pp_stripe_stripe"
   )
 
   const session = cart.payment_collection?.payment_sessions?.find(
