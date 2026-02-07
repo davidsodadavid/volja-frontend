@@ -1,14 +1,12 @@
 import { Metadata } from "next"
 
-import FeaturedProducts from "@modules/home/components/featured-products"
-import Hero from "@modules/home/components/hero"
 import { listCollections } from "@lib/data/collections"
 import { getRegion } from "@lib/data/regions"
+import { TextImageRow } from "@modules/home/components/text-image-row/TextImageRow"
 
 export const metadata: Metadata = {
-  title: "Medusa Next.js Starter Template",
-  description:
-    "A performant frontend ecommerce starter template with Next.js 15 and Medusa.",
+  title: "Atelje Volja",
+  description: "",
 }
 
 export default async function Home(props: {
@@ -30,12 +28,49 @@ export default async function Home(props: {
 
   return (
     <>
-      <Hero />
-      <div className="py-12">
-        <ul className="flex flex-col gap-x-6">
-          <FeaturedProducts collections={collections} region={region} />
-        </ul>
-      </div>
+      <main className="content-container flex flex-col gap-16 py-20">
+        <TextImageRow url="/images/1.png">
+          <ul className="list-['–\00a0\00a0'] list-inside font-display leading-10">
+            <li className="text-[30px] font-bold">ATELJE</li>
+            <li className="text-[30px] font-bold">SHOP</li>
+            <li className="text-[30px]">Trubarjeva 55</li>
+            <li className="font-text text-sm">Paragraph text</li>
+            <li className="font-text text-sm">
+              35 is max number of characters here
+            </li>
+            <li className="font-text text-sm">Lorem ipsum dolor sit</li>
+            <li className="font-text text-sm">Circular approach</li>
+            <li className="font-text text-sm">Facts only</li>
+            <li className="font-text text-sm">Menswear something</li>
+            <li className="font-text text-sm">Line 7</li>
+            <li className="font-text text-sm">Line 8</li>
+            <li className="font-text text-sm">Line 9</li>
+            <li className="font-text text-sm">Max 10 lines of text</li>
+          </ul>
+        </TextImageRow>
+        <TextImageRow url="/images/2.png">
+          <div className="text-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+            tincidunt odio et enim semper iaculis. Fusce vestibulum venenatis
+            purus. Fusce et arcu arcu. Suspendisse lacus lorem, pharetra ut
+            blandit quis, lacinia quis enim. Quisque quis elementum justo, ut
+            dictum dui. Sed eget pellentesque nibh. Integer iaculis ante sed
+            magna ornare fringilla. Aenean sit amet purus quam. Aliquam id
+            pulvinar leo, vel maximus enim.
+          </div>
+        </TextImageRow>
+        <TextImageRow url="/images/3.png">
+          <div className="text-sm">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
+            tincidunt odio et enim semper iaculis. Fusce vestibulum venenatis
+            purus. Fusce et arcu arcu. Suspendisse lacus lorem, pharetra ut
+            blandit quis, lacinia quis enim. Quisque quis elementum justo, ut
+            dictum dui. Sed eget pellentesque nibh. Integer iaculis ante sed
+            magna ornare fringilla. Aenean sit amet purus quam. Aliquam id
+            pulvinar leo, vel maximus enim.
+          </div>
+        </TextImageRow>
+      </main>
     </>
   )
 }

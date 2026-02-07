@@ -60,7 +60,7 @@ module.exports = {
       },
       fontFamily: {
         display: ["var(--font-neue-haas-display)", "sans-serif"],
-        text: ["var(--font-neue-haas-text)", "sans-serif"],
+        text: ["sans-serif"],
       },
       keyframes: {
         ring: {
