@@ -8,7 +8,7 @@ const Hero = () => {
         <span>
           <Heading
             level="h1"
-            className="text-3xl leading-10 text-ui-fg-base font-normal"
+            className="text-3xl leading-10 text-ui-fg-base font-display"
           >
             Ecommerce Starter Template
           </Heading>
