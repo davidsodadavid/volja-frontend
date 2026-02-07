@@ -22,7 +22,7 @@ export default function NavLinks() {
           <LocalizedClientLink
             key={href}
             href={href}
-            className={isActive ? "font-bold underline underline-offset-4" : ""}
+            className={isActive ? "font-bold underline underline-offset-8" : ""}
           >
             {label}
           </LocalizedClientLink>

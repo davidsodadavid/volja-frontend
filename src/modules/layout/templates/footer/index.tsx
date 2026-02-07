@@ -1,155 +1,70 @@
-import { listCategories } from "@lib/data/categories"
-import { listCollections } from "@lib/data/collections"
-import { Text, clx } from "@medusajs/ui"
-
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
-import MedusaCTA from "@modules/layout/components/medusa-cta"
-
 export default async function Footer() {
-  const { collections } = await listCollections({
-    fields: "*products",
-  })
-  const productCategories = await listCategories()
-
   return (
-    <footer className="border-t border-ui-border-base w-full">
-      <div className="content-container flex flex-col w-full">
-        <div className="flex flex-col gap-y-6 xsmall:flex-row items-start justify-between py-40">
+    <footer className="w-full">
+      <div className="content-container py-8 font-display">
+        <div className="flex flex-col small:flex-row justify-between gap-12">
+          {/* Left side */}
           <div>
-            <LocalizedClientLink
-              href="/"
-              className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
-            >
-              Volja
-            </LocalizedClientLink>
+            <ul className="list-['–\00a0\00a0'] list-inside leading-10">
+              <li className="text-[30px] font-bold">ATELJE</li>
+              <li className="text-[30px] font-bold">SHOP</li>
+              <li className="text-[30px]">Trubarjeva 55</li>
+              <li className="font-text text-sm">Monday to Friday</li>
+              <li className="font-text text-sm">11:00 – 17:00</li>
+              <li className="font-text text-sm">Saturday</li>
+              <li className="font-text text-sm">11:00 – 17:00</li>
+              <li className="font-text text-sm">Sunday Closed</li>
+              <li className="font-text text-sm">Welcome</li>
+            </ul>
           </div>
-          <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-3">
-            {productCategories && productCategories?.length > 0 && (
-              <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus txt-ui-fg-base">
-                  Categories
-                </span>
-                <ul
-                  className="grid grid-cols-1 gap-2"
-                  data-testid="footer-categories"
-                >
-                  {productCategories?.slice(0, 6).map((c) => {
-                    if (c.parent_category) {
-                      return
-                    }
 
-                    const children =
-                      c.category_children?.map((child) => ({
-                        name: child.name,
-                        handle: child.handle,
-                        id: child.id,
-                      })) || null
-
-                    return (
-                      <li
-                        className="flex flex-col gap-2 text-ui-fg-subtle txt-small"
-                        key={c.id}
-                      >
-                        <LocalizedClientLink
-                          className={clx(
-                            "hover:text-ui-fg-base",
-                            children && "txt-small-plus"
-                          )}
-                          href={`/categories/${c.handle}`}
-                          data-testid="category-link"
-                        >
-                          {c.name}
-                        </LocalizedClientLink>
-                        {children && (
-                          <ul className="grid grid-cols-1 ml-3 gap-2">
-                            {children &&
-                              children.map((child) => (
-                                <li key={child.id}>
-                                  <LocalizedClientLink
-                                    className="hover:text-ui-fg-base"
-                                    href={`/categories/${child.handle}`}
-                                    data-testid="category-link"
-                                  >
-                                    {child.name}
-                                  </LocalizedClientLink>
-                                </li>
-                              ))}
-                          </ul>
-                        )}
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-            )}
-            {collections && collections.length > 0 && (
-              <div className="flex flex-col gap-y-2">
-                <span className="txt-small-plus txt-ui-fg-base">
-                  Collections
-                </span>
-                <ul
-                  className={clx(
-                    "grid grid-cols-1 gap-2 text-ui-fg-subtle txt-small",
-                    {
-                      "grid-cols-2": (collections?.length || 0) > 3,
-                    }
-                  )}
+          {/* Right side */}
+          <div className="flex flex-col gap-12 small:max-w-[500px] w-full">
+            {/* Links - shown first on mobile, last on desktop */}
+            <div className="flex flex-col small:flex-row text-[30px] gap-6 order-first small:order-last">
+              <div className="max-w-[180px] w-full">
+                <a
+                  href="https://instagram.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  {collections?.slice(0, 6).map((c) => (
-                    <li key={c.id}>
-                      <LocalizedClientLink
-                        className="hover:text-ui-fg-base"
-                        href={`/collections/${c.handle}`}
-                      >
-                        {c.title}
-                      </LocalizedClientLink>
-                    </li>
-                  ))}
-                </ul>
+                  Instagram &rarr;
+                </a>
               </div>
-            )}
-            <div className="flex flex-col gap-y-2">
-              <span className="txt-small-plus txt-ui-fg-base">Medusa</span>
-              <ul className="grid grid-cols-1 gap-y-2 text-ui-fg-subtle txt-small">
-                <li>
-                  <a
-                    href="https://github.com/medusajs"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    GitHub
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://docs.medusajs.com"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    Documentation
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="https://github.com/medusajs/nextjs-starter-medusa"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="hover:text-ui-fg-base"
-                  >
-                    Source code
-                  </a>
-                </li>
-              </ul>
+              <a href="mailto:hello@volja.si">hello@volja.si &rarr;</a>
+            </div>
+
+            {/* Newsletter */}
+            <div className="flex flex-col small:flex-row gap-6 small:items-start">
+              <p className="font-text text-sm max-w-[180px]">
+                Stay in the loop with new garments. Sign up for my newsletter.
+              </p>
+              <div className="flex flex-col gap-2 flex-1">
+                <input
+                  type="email"
+                  placeholder="Enter email"
+                  className="border border-black px-4 py-3 text-xl w-full outline-none"
+                />
+                <button className="bg-black text-white px-4 py-3 text-xl flex items-center justify-between w-full">
+                  Subscribe
+                  <span>&rarr;</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
-        <div className="flex w-full mb-16 justify-between text-ui-fg-muted">
-          <Text className="txt-compact-small">
-            © {new Date().getFullYear()} Volja Store. All rights reserved.
-          </Text>
-          <MedusaCTA />
+
+        {/* Bottom bar */}
+        <div className="flex flex-col small:flex-row gap-4 items-start small:items-center mt-20 font-text text-sm">
+          <span>
+            &copy; Volja {new Date().getFullYear()} All Rights Reserved
+          </span>
+          <a href="/terms" className="underline">
+            Terms and Conditions
+          </a>
+          <a href="/cookies" className="underline">
+            Cookies
+          </a>
         </div>
       </div>
     </footer>
