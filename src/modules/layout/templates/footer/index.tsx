@@ -1,6 +1,6 @@
 export default async function Footer() {
   return (
-    <footer className="w-full">
+    <footer className="w-full" id="footer">
       <div className="content-container py-8 font-display">
         <div className="flex flex-col small:flex-row justify-between gap-12">
           {/* Left side */}
@@ -10,9 +10,9 @@ export default async function Footer() {
               <li className="text-[30px] font-bold">SHOP</li>
               <li className="text-[30px]">Trubarjeva 55</li>
               <li className="font-text text-sm">Monday to Friday</li>
-              <li className="font-text text-sm">11:00 – 17:00</li>
+              <li className="font-text text-sm">13:00 – 18:00</li>
               <li className="font-text text-sm">Saturday</li>
-              <li className="font-text text-sm">11:00 – 17:00</li>
+              <li className="font-text text-sm">10:00 – 16:00</li>
               <li className="font-text text-sm">Sunday Closed</li>
               <li className="font-text text-sm">Welcome</li>
             </ul>
@@ -24,14 +24,16 @@ export default async function Footer() {
             <div className="flex flex-col small:flex-row text-[30px] gap-6 order-first small:order-last">
               <div className="max-w-[180px] w-full">
                 <a
-                  href="https://instagram.com"
+                  href="https://www.instagram.com/volja__/"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   Instagram &rarr;
                 </a>
               </div>
-              <a href="mailto:hello@volja.si">hello@volja.si &rarr;</a>
+              <a href="mailto:info@ateljevolja.si">
+                info@ateljevolja.si &rarr;
+              </a>
             </div>
 
             {/* Newsletter */}
