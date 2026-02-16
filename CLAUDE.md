@@ -17,16 +17,27 @@ Volja Frontend is a Next.js 15 ecommerce storefront for Atelje Volja, built on t
 | `npm run build` | Production build |
 | `npm run start` | Production server on port 8000 |
 | `npm run lint` | ESLint (next/core-web-vitals) |
-| `npm run deploy` | Deploy to Cloudflare Workers |
-| `npm run preview` | Preview Cloudflare build |
+| `npm run deploy` | Build + deploy to Cloudflare Workers |
+| `npm run preview` | Build + preview Cloudflare build locally |
 
 No test framework is configured.
+
+## Environment Variables
+
+Required:
+- `MEDUSA_BACKEND_URL` — Medusa server URL (build fails without it)
+- `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` — Medusa publishable API key (build fails without it)
+
+Optional:
+- `NEXT_PUBLIC_STRIPE_KEY` — Stripe public key for payment
+- `NEXT_PUBLIC_BASE_URL` — Base URL for metadata (defaults to `https://localhost:8000`)
+- `NEXT_PUBLIC_DEFAULT_REGION` — Default region fallback (defaults to `us` in middleware)
 
 ## Architecture
 
 ### Routing & Regions
 
-All storefront routes are nested under `src/app/[countryCode]/`, making region/country a top-level route parameter. The middleware (`src/middleware.ts`) handles automatic region detection by checking the URL, `x-vercel-ip-country` header, or falling back to `NEXT_PUBLIC_DEFAULT_REGION` (eu).
+All storefront routes are nested under `src/app/[countryCode]/`, making region/country a top-level route parameter. The middleware (`src/middleware.ts`) handles automatic region detection by checking the URL, `x-vercel-ip-country` header, or falling back to `NEXT_PUBLIC_DEFAULT_REGION`.
 
 Two route groups exist under `[countryCode]`:
 - `(main)/` — storefront pages (store, products, cart, account, etc.)
@@ -61,15 +72,25 @@ Feature modules live in `src/modules/` (account, cart, checkout, products, store
 
 Stripe is the primary payment provider, integrated via `@stripe/react-stripe-js` with Payment Element. Multiple payment methods are supported (card, iDeal, Bancontact, PayPal, manual). Provider ID mappings and UI labels are defined in `src/lib/constants.tsx`.
 
+### Deployment
+
+Deploys to Cloudflare Workers via `@opennextjs/cloudflare`. Config in `wrangler.jsonc` (worker name: `volja-front`). Uses R2 bucket (`volja-front`) for incremental cache via `open-next.config.ts`. The `.open-next/` directory contains build output — do not edit directly.
+
+Note: `next.config.js` sets `ignoreDuringBuilds: true` for both ESLint and TypeScript errors.
+
 ### Path Aliases
 
-Configured in `tsconfig.json`:
+Configured in `tsconfig.json` (baseUrl: `./src`):
 - `@lib/*` → `src/lib/*`
 - `@modules/*` → `src/modules/*`
 
 ### Styling
 
-Tailwind CSS with Medusa UI preset. Custom breakpoints range from `2xsmall` (320px) to `2xlarge` (1920px). Dark mode uses class strategy. Custom color tokens (grey-0 through grey-90) and border radius tokens are defined in `tailwind.config.js`.
+Tailwind CSS with Medusa UI preset (`@medusajs/ui-preset`). Custom breakpoints range from `2xsmall` (320px) to `2xlarge` (1920px). Dark mode uses class strategy. Brand color: `atelje-blue` (#91CAFF). Custom grey scale (grey-0 through grey-90) and border radius tokens in `tailwind.config.js`.
+
+Font families: `font-display` (Neue Haas Display — light/roman/bold, loaded as local fonts in `src/app/layout.tsx`) and `font-text` (sans-serif fallback). CSS variable: `--font-neue-haas-display`.
+
+Global CSS (`src/styles/globals.css`) defines utility classes: `.content-container` (max-width 1440px centered), `.contrast-btn`, and typography helpers (`.text-xsmall-regular` through `.text-3xl-semi`).
 
 ### Code Style
 
