@@ -12,11 +12,7 @@
     "build": "next build --webpack",
     "start": "next start -p 8000",
     "lint": "eslint src/",
-    "analyze": "ANALYZE=true next build",
-    "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
-    "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
-    "upload": "opennextjs-cloudflare build && opennextjs-cloudflare upload",
-    "cf-typegen": "wrangler types --env-interface CloudflareEnv cloudflare-env.d.ts"
+    "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.0",
@@ -41,7 +37,6 @@
     "@babel/core": "^7.17.5",
     "@medusajs/types": "latest",
     "@medusajs/ui-preset": "latest",
-    "@opennextjs/cloudflare": "latest",
     "@types/lodash": "^4.14.195",
     "@types/node": "17.0.21",
     "@types/pg": "^8.11.0",
@@ -57,5 +52,11 @@
     "prettier": "^2.8.8",
     "tailwindcss": "^3.0.23",
     "typescript": "^5.3.2"
+  },
+  "overrides": {
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0"
   }
 }
