@@ -5,6 +5,8 @@ import CartButton from "@modules/layout/components/cart-button"
 import NavLinks from "@modules/layout/components/nav-links"
 import MobileMenu from "@modules/layout/components/mobile-menu"
 import NavWrapper from "@modules/layout/components/nav-wrapper"
+import Image from "next/image"
+import Link from "next/link"
 
 export default async function Nav() {
   return (
@@ -12,13 +14,19 @@ export default async function Nav() {
       <NavWrapper>
         <nav className="content-container font-display text-[30px] flex items-center justify-between w-full h-full">
           <div className="flex-1 basis-0 h-full flex items-center">
-            <LocalizedClientLink
-              href="/"
-              className="font-bold"
-              data-testid="nav-store-link"
-            >
-              Volja
-            </LocalizedClientLink>
+
+
+            <div className="relative w-full small:w-2/3 h-[30px] flex items-center">
+              <Link href="/">
+                <Image
+                  src="/images/volja-logo.png"
+                  alt="Volja Logo"
+                  width={120}
+                  height={30}
+                  className="object-contain"
+                />
+              </Link>
+            </div>
           </div>
 
           <div className="hidden small:flex items-center gap-x-8 h-full">
