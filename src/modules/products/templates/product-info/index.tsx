@@ -1,6 +1,6 @@
 import { HttpTypes } from "@medusajs/types"
 import { Heading, Text } from "@medusajs/ui"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { TextImageRow } from "@modules/home/components/text-image-row/TextImageRow"
 
 type ProductInfoProps = {
   product: HttpTypes.StoreProduct
@@ -11,38 +11,18 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
   return (
     <div id="product-info">
       <div className="flex flex-col gap-y-4 lg:max-w-[500px] mx-auto">
-        {product.collection && (
-          <LocalizedClientLink
-            href={`/collections/${product.collection.handle}`}
-            className="text-medium text-ui-fg-muted hover:text-ui-fg-subtle"
-          >
-            {product.type?.value}
-          </LocalizedClientLink>
-        )}
-        <Heading
-          level="h2"
-          className="text-3xl leading-10 text-ui-fg-base"
-          data-testid="product-title"
-        >
-          {product.title}
-        </Heading>
-        <Heading
-          level="h3"
-          className="text-2xl leading-10 text-ui-fg-base"
-          data-testid="product-title"
-        >
-          {product.subtitle}
-        </Heading>
-
-        <Text
-          className="text-medium text-ui-fg-subtle whitespace-pre-line"
-          data-testid="product-description"
-        >
+        <ul className="list-['–\00a0\00a0'] list-inside font-display leading-10">
+          <li data-testid="product-title" className="text-[30px] uppercase font-bold">{product.title}</li>
+          <li className="text-[30px]">{product.subtitle}</li>
+          <li className="text-[30px]">{product.material}</li>
           {product.description
-            ?.split('\n')
-            .map((line, index) => `- ${line}`)
-            .join('\n')}
-        </Text>
+            ?.split("\n")
+            .map((line, index) => (
+              <li key={index} className="font-text text-sm">
+                {line}
+              </li>
+            ))}
+        </ul>
       </div>
     </div>
   )

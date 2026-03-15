@@ -107,7 +107,7 @@ const CartDropdown = ({
             </div>
             {cartState && cartState.items?.length ? (
               <>
-                <div className="overflow-y-scroll max-h-[402px] px-4 grid grid-cols-1 gap-y-8 no-scrollbar p-px">
+                <div className="overflow-y-scroll max-h-[402px] px-4 grid grid-cols-1 gap-y-8 no-scrollbar p-px font-display">
                   {cartState.items
                     .sort((a, b) => {
                       return (a.created_at ?? "") > (b.created_at ?? "")
@@ -193,7 +193,7 @@ const CartDropdown = ({
                   </div>
                   <LocalizedClientLink href="/cart" passHref>
                     <Button
-                      className="w-full"
+                      className="w-full font-display rounded-none"
                       size="large"
                       data-testid="go-to-cart-button"
                     >
@@ -203,7 +203,7 @@ const CartDropdown = ({
                 </div>
               </>
             ) : (
-              <div>
+              <div className="font-display">
                 <div className="flex py-16 flex-col gap-y-4 items-center justify-center">
                   <div className="bg-gray-900 text-small-regular flex items-center justify-center w-6 h-6 rounded-full text-white">
                     <span>0</span>
@@ -213,7 +213,7 @@ const CartDropdown = ({
                     <LocalizedClientLink href="/store">
                       <>
                         <span className="sr-only">Go to all products page</span>
-                        <Button onClick={close}>Explore products</Button>
+                        <Button className="rounded-none font-display" onClick={close}>Explore products</Button>
                       </>
                     </LocalizedClientLink>
                   </div>
