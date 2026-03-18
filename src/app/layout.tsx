@@ -31,6 +31,9 @@ const neueHaasText = localFont({
 
 export const metadata: Metadata = {
   metadataBase: new URL(getBaseURL()),
+  title: 'Atelje Volja',
+  description: 'A local clothing workshop specializing in custom-made and carefully crafted apparel.'
+  
 }
 
 export default function RootLayout(props: { children: React.ReactNode }) {

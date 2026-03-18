@@ -27,12 +27,19 @@ export default async function Footer() {
                   href="https://www.instagram.com/volja__/"
                   target="_blank"
                   rel="noopener noreferrer"
+                  className="group"
                 >
-                  Instagram &rarr;
+                  <span className="hover:underline">Instagram</span>
+                  <span className="ml-2 inline-block transition-transform duration-300 group-hover:translate-x-4">
+                    &rarr;
+                  </span>
                 </a>
               </div>
-              <a href="mailto:info@ateljevolja.si">
-                info@ateljevolja.si &rarr;
+              <a href="mailto:info@ateljevolja.si" className="group">
+                <span className="hover:underline">info@ateljevolja.si</span>
+                <span className="ml-2 inline-block transition-transform group-hover:translate-x-4">
+                  &rarr;
+                </span>
               </a>
             </div>
 
@@ -47,8 +54,10 @@ export default async function Footer() {
                   placeholder="Enter email"
                   className="border border-black px-4 py-3 text-xl w-full outline-none"
                 />
-                <button className="bg-black text-white px-4 py-3 text-xl flex items-center justify-between w-full">
-                  Subscribe
+                <button className="group bg-black text-white px-4 py-3 text-xl flex items-center justify-between w-full">
+                  <span className="transition-transform duration-300 group-hover:translate-x-5">
+                    Subscribe
+                  </span>
                   <span>&rarr;</span>
                 </button>
               </div>

@@ -20,8 +20,6 @@ const CartTemplate = ({
             <div className="flex flex-col bg-white py-6 gap-y-6">
               {!customer && (
                 <>
-                  <SignInPrompt />
-                  <Divider />
                 </>
               )}
               <ItemsTemplate cart={cart} />
