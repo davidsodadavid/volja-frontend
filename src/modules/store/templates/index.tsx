@@ -1,12 +1,11 @@
-import { Suspense } from "react"
+// 'use client'
 
-import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
-import RefinementList from "@modules/store/components/refinement-list"
 import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 
-import PaginatedProducts from "./paginated-products"
+import { listPreOrderProducts } from "@lib/data/pre-order"
+import { PreorderSection } from "@modules/store/components/product-sections/PreorderSection"
 
-const StoreTemplate = ({
+const StoreTemplate = async ({
   sortBy,
   page,
   countryCode,
@@ -18,26 +17,50 @@ const StoreTemplate = ({
   const pageNumber = page ? parseInt(page) : 1
   const sort = sortBy || "created_at"
 
+  const preOrderProducts = await listPreOrderProducts()
+
+  console.log(preOrderProducts)
+
+  const now = new Date()
+  const preorderProducts = preOrderProducts.filter(
+    (p) => new Date(p.custom.pre_order_date) > now
+  )
+  const beingMadeRightNowProducts = preOrderProducts.filter(
+    (p) => new Date(p.custom.pre_order_date) <= now
+  )
+
   return (
-    <div
-      className="flex flex-col small:flex-row small:items-start py-6 content-container"
-      data-testid="category-container"
-    >
-      <RefinementList sortBy={sort} />
-      <div className="w-full">
-        <div className="mb-8 text-2xl-semi">
-          <h1 data-testid="store-page-title">Archive</h1>
-        </div>
-        <Suspense fallback={<SkeletonProductGrid />}>
-          <PaginatedProducts
-            sortBy={sort}
-            page={pageNumber}
-            countryCode={countryCode}
-          />
-        </Suspense>
-      </div>
+    <div className="flex flex-col">
+      <PreorderSection products={preorderProducts} />
+      {/*<Suspense fallback={<SkeletonProductGrid />}>*/}
+      {/*  <PreOrderProducts countryCode={countryCode} products={upcoming} />*/}
+      {/*</Suspense>*/}
     </div>
   )
+
+  // return (
+  //   <div
+  //     className="flex flex-col small:flex-row small:items-start py-6 content-container"
+  //     data-testid="category-container"
+  //   >
+  //     {/*<RefinementList sortBy={sort} />*/}
+  //     <div className="w-full">
+  //       <Suspense fallback={<SkeletonProductGrid />}>
+  //         <PreOrderProducts countryCode={countryCode} />
+  //       </Suspense>
+  //       <div className="mb-8 text-2xl-semi">
+  //         <h1 data-testid="store-page-title">Archive</h1>
+  //       </div>
+  //       <Suspense fallback={<SkeletonProductGrid />}>
+  //         <PaginatedProducts
+  //           sortBy={sort}
+  //           page={pageNumber}
+  //           countryCode={countryCode}
+  //         />
+  //       </Suspense>
+  //     </div>
+  //   </div>
+  // )
 }
 
 export default StoreTemplate

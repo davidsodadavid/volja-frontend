@@ -14,8 +14,6 @@ export default async function Nav() {
       <NavWrapper>
         <nav className="content-container font-display text-[30px] flex items-center justify-between w-full h-full">
           <div className="flex-1 basis-0 h-full flex items-center">
-
-
             <div className="relative w-full small:w-2/3 h-[30px] flex items-center">
               <Link href="/">
                 <Image
