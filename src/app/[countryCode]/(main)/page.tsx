@@ -30,7 +30,7 @@ export default async function Home(props: {
     <>
       <main className="content-container flex flex-col gap-16 py-20">
         <TextImageRow url="/images/1.png">
-          <ul className="list-['–\00a0\00a0'] list-inside font-display leading-10">
+          <ul className="list-none font-display leading-10 w-fit mx-auto [&>li]:flex [&>li]:gap-[10px] [&>li]:items-baseline [&>li::before]:content-['–'] [&>li::before]:w-6 [&>li::before]:text-center [&>li::before]:flex-shrink-0">
             <li className="text-[30px] font-bold">ATELJE</li>
             <li className="text-[30px] font-bold">SHOP</li>
             <li className="text-[30px]">Trubarjeva 55</li>

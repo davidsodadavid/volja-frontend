@@ -1,6 +1,4 @@
 import { HttpTypes } from "@medusajs/types"
-import { Heading, Text } from "@medusajs/ui"
-import { TextImageRow } from "@modules/home/components/text-image-row/TextImageRow"
 
 type ProductInfoProps = {
   product: HttpTypes.StoreProduct

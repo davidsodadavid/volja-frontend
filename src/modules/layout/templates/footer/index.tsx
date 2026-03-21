@@ -52,9 +52,9 @@ export default async function Footer() {
                 <input
                   type="email"
                   placeholder="Enter email"
-                  className="border border-black px-4 py-3 text-xl w-full outline-none"
+                  className="border border-black px-4 py-2 text-[30px] w-full outline-none"
                 />
-                <button className="group bg-black text-white px-4 py-3 text-xl flex items-center justify-between w-full">
+                <button className="group bg-black text-white px-4 py-2 text-[30px] flex items-center justify-between w-full">
                   <span className="transition-transform duration-300 group-hover:translate-x-5">
                     Subscribe
                   </span>
