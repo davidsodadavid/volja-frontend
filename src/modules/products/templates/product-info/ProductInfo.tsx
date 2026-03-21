@@ -9,7 +9,7 @@ const ProductInfo = ({ product }: ProductInfoProps) => {
   return (
     <div id="product-info">
       <div className="flex flex-col gap-y-4 lg:max-w-[500px] mx-auto">
-        <ul className="list-['–\00a0\00a0'] list-inside font-display leading-10">
+        <ul className="list-none font-display leading-10 w-fit mx-auto [&>li]:flex [&>li]:gap-[10px] [&>li]:items-baseline [&>li::before]:content-['–'] [&>li::before]:w-6 [&>li::before]:text-center [&>li::before]:flex-shrink-0">
           <li data-testid="product-title" className="text-[30px] uppercase font-bold">{product.title}</li>
           <li className="text-[30px]">{product.subtitle}</li>
           <li className="text-[30px]">{product.material}</li>

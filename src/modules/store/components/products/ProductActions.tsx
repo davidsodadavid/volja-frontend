@@ -47,6 +47,8 @@ export const ProductActions: FC<IProductActions> = ({ product }) => {
   const sizes = MOCK_SIZES
   // not sure
   const preorderPrice = selectedVariant?.calculated_price?.calculated_amount
+  const preOrderDate = product.custom.pre_order_date
+  const isPreorderActive = !!preOrderDate && new Date(preOrderDate) > new Date()
 
   return (
     <div className="flex flex-col justify-between h-full max-w-[290px] w-full">
@@ -55,8 +57,12 @@ export const ProductActions: FC<IProductActions> = ({ product }) => {
           <div>
             <p className="font-text text-sm mb-1">Preorder price:</p>
             <div className="flex items-baseline gap-3">
-              <span className="font-display text-4xl font-bold">{preorderPrice} <span className="text-3xl">€</span></span>
-              <span className="font-display text-xl line-through opacity-50">{Math.round(preorderPrice + (preorderPrice / 10))} €</span>
+              <span className="font-display text-4xl font-bold">
+                {preorderPrice} <span className="text-3xl">€</span>
+              </span>
+              <span className="font-display text-xl line-through opacity-50">
+                {Math.round(preorderPrice + preorderPrice / 10)} €
+              </span>
             </div>
           </div>
         )}
@@ -71,32 +77,56 @@ export const ProductActions: FC<IProductActions> = ({ product }) => {
                   key={variant.id}
                   value={variant.metadata?.color || "#4a5e4a"}
                   selected={variant.id === selectedVariantId}
-                  available={variant.available} />
+                  available={variant.available}
+                />
               ))}
             </div>
           </div>
         )}
 
-          <div>
-            <div className="flex items-center gap-2 flex-wrap mb-3">
-              {sizes.map((s, i) => (
-                <SizeButton key={i} label={s.label} available={s.available} />
-              ))}
-            </div>
-            <SizeChart size_chart_string={product.metadata.size_chart} />
+        <div>
+          <div className="flex items-center gap-2 flex-wrap mb-3">
+            {sizes.map((s, i) => (
+              <SizeButton key={i} label={s.label} available={s.available} />
+            ))}
           </div>
+          <SizeChart size_chart_string={product.metadata?.size_chart} />
+        </div>
       </div>
 
       <div className="mt-auto">
-        <PreorderCountdown targetDate={product.custom.pre_order_date} />
+        {isPreorderActive && <PreorderCountdown targetDate={preOrderDate} />}
 
-        <LocalizedClientLink
-          href={`/products/${product.handle}`}
-          className="flex items-center justify-between w-full bg-black text-white font-text text-sm px-5 py-4 hover:bg-black/80 transition-colors"
-        >
-          <span>Preorder</span>
-          <span>→</span>
-        </LocalizedClientLink>
+        {isPreorderActive && (
+          <LocalizedClientLink
+            href={`/products/${product.handle}`}
+            className="flex items-center justify-between w-full bg-black text-white font-text text-sm px-5 py-4 hover:bg-black/80 transition-colors"
+          >
+            <span>Preorder</span>
+            <span>→</span>
+          </LocalizedClientLink>
+        )}
+
+        {!isPreorderActive && (
+          <p className="w-1/2 mb-4 text-xs">
+            I guess you missed it! I can let you know if it is available in the
+            shop.
+          </p>
+        )}
+
+        {!isPreorderActive && (
+          <input
+            type="email"
+            placeholder="Enter email"
+            className="border border-black mb-2 px-4 py-2 text-[30px] w-full outline-none"
+          />
+        )}
+
+        {!isPreorderActive && (
+          <button className="flex items-center justify-between w-full bg-black text-white font-text text-[30px] px-3 py-2 hover:bg-black/80 transition-colors">
+            Get Notified
+          </button>
+        )}
       </div>
     </div>
   )

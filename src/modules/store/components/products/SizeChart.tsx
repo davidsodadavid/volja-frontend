@@ -15,7 +15,7 @@ interface ISizeChart {
 }
 
 export const SizeChart: FC<ISizeChart> = ({ size_chart_string }) => {
-  const sizeChart: SizeChartData = JSON.parse(size_chart_string)
+  const sizeChart: SizeChartData = JSON.parse(size_chart_string || '{}')
   const [open, setOpen] = useState(false)
   const panelRef = useRef<HTMLDivElement>(null)
 
@@ -29,6 +29,8 @@ export const SizeChart: FC<ISizeChart> = ({ size_chart_string }) => {
     document.addEventListener("mousedown", handler)
     return () => document.removeEventListener("mousedown", handler)
   }, [open])
+
+  if (!size_chart_string) return null
 
   return (
     <>

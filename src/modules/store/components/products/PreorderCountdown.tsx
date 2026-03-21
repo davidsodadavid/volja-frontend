@@ -11,7 +11,7 @@ export const PreorderCountdown: FC<PreorderCountdownProps> = ({ targetDate }) =>
   const { h, m, s, expired } = useCountdown(targetDate)
 
   if (expired) {
-    return <p className="font-text text-sm mb-4">Preorder closed</p>
+    return null
   }
 
   return (

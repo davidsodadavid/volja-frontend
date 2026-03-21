@@ -1,6 +1,5 @@
 import { FC } from "react"
 import { PreOrderProduct } from "@lib/data/pre-order"
-import { ProductDescription } from "./ProductDescription"
 import { ProductImageGallery } from "./ProductGallery"
 import { ProductActions } from "./ProductActions"
 import ProductInfo from "@modules/products/templates/product-info/ProductInfo"
@@ -10,17 +9,12 @@ interface IPreorderProduct {
 }
 
 export const FeaturedProduct: FC<IPreorderProduct> = ({ product }) => {
-  console.log(product)
 
   return (
     <div className="w-full py-12">
       {/* Large: 3-column — description | gallery | actions */}
       <div className="hidden lg:flex gap-5 justify-between h-[640px]">
         <ProductInfo product={product} />
-        {/*<ProductDescription*/}
-        {/*  title={product.title}*/}
-        {/*  description={product.description}*/}
-        {/*/>*/}
         <ProductImageGallery
           images={product.images}
           thumbnail={product.thumbnail}
@@ -37,10 +31,6 @@ export const FeaturedProduct: FC<IPreorderProduct> = ({ product }) => {
           title={product.title}
         />
         <ProductInfo product={product} />
-        {/*<ProductDescription*/}
-        {/*  title={product.title}*/}
-        {/*  description={product.description}*/}
-        {/*/>*/}
         <ProductActions product={product} />
       </div>
     </div>

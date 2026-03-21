@@ -4,6 +4,7 @@ import { SortOptions } from "@modules/store/components/refinement-list/sort-prod
 
 import { listPreOrderProducts } from "@lib/data/pre-order"
 import { PreorderSection } from "@modules/store/components/product-sections/PreorderSection"
+import { BeingMadeRightNow } from "@modules/store/components/product-sections/BeingMadeRightNow"
 
 const StoreTemplate = async ({
   sortBy,
@@ -19,8 +20,6 @@ const StoreTemplate = async ({
 
   const preOrderProducts = await listPreOrderProducts()
 
-  console.log(preOrderProducts)
-
   const now = new Date()
   const preorderProducts = preOrderProducts.filter(
     (p) => new Date(p.custom.pre_order_date) > now
@@ -29,9 +28,12 @@ const StoreTemplate = async ({
     (p) => new Date(p.custom.pre_order_date) <= now
   )
 
+  console.log(beingMadeRightNowProducts, 'bmrn')
+
   return (
     <div className="flex flex-col">
       <PreorderSection products={preorderProducts} />
+      <BeingMadeRightNow products={beingMadeRightNowProducts} />
       {/*<Suspense fallback={<SkeletonProductGrid />}>*/}
       {/*  <PreOrderProducts countryCode={countryCode} products={upcoming} />*/}
       {/*</Suspense>*/}

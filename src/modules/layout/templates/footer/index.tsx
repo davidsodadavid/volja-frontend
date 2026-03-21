@@ -5,7 +5,7 @@ export default async function Footer() {
         <div className="flex flex-col small:flex-row justify-between gap-12">
           {/* Left side */}
           <div>
-            <ul className="list-['–\00a0\00a0'] list-inside leading-10">
+            <ul className="list-none leading-10 w-fit [&>li]:flex [&>li]:gap-[10px] [&>li]:items-baseline [&>li::before]:content-['–'] [&>li::before]:w-6 [&>li::before]:text-center [&>li::before]:flex-shrink-0">
               <li className="text-[30px] font-bold">ATELJE</li>
               <li className="text-[30px] font-bold">SHOP</li>
               <li className="text-[30px]">Trubarjeva 55</li>
