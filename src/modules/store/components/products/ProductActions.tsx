@@ -2,21 +2,23 @@
 
 import { FC, useState } from "react"
 import { PreOrderProduct } from "@lib/data/pre-order"
-import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import { addToCart } from "@lib/data/cart"
+import { useParams } from "next/navigation"
 import { PreorderCountdown } from "./PreorderCountdown"
 import { DiagonalSlash } from "@modules/store/components/products/DiagonalSlash"
 import { ColorSwatch } from "@modules/store/components/products/ColorSwatch"
 import { SizeChart } from "@modules/store/components/products/SizeChart"
+
 
 interface IProductActions {
   product: PreOrderProduct
 }
 
 
-const SizeButton: FC<{ label: string; available: boolean }> = ({ label, available }) => {
+const SizeButton: FC<{ label: string; available: boolean; selected?: boolean; onClick?: () => void }> = ({ label, available, selected, onClick }) => {
   if (!available) {
     return (
-      <div className="relative w-9 h-9 rounded-full border border-black/20 flex items-center justify-center overflow-hidden">
+      <div className="relative w-9 h-9 rounded-full border border-black/20 flex items-center justify-center overflow-visible">
         <span className="font-text text-xs text-black/25">{label}</span>
         <DiagonalSlash />
       </div>
@@ -24,31 +26,48 @@ const SizeButton: FC<{ label: string; available: boolean }> = ({ label, availabl
   }
 
   return (
-    <div className="w-9 h-9 rounded-full border border-black/50 flex items-center justify-center">
+    <div
+      onClick={onClick}
+      className={`relative w-9 h-9 rounded-full flex items-center justify-center cursor-pointer ${selected ? "border-2 border-black" : "border border-black"}`}
+    >
       <span className="font-text text-xs">{label}</span>
     </div>
   )
 }
 
-const MOCK_SIZES = [
-  { label: "S", available: true },
-  { label: "M", available: true },
-  { label: "L", available: false },
-  { label: "XXL", available: true },
-]
-
 export const ProductActions: FC<IProductActions> = ({ product }) => {
-  const firstAvailableVariant = product.variants.find(v => v.available)
-  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(firstAvailableVariant?.id || null)
+  type ColorGroup = { color: string; available: boolean; variants: typeof product.variants }
 
-  const selectedVariant = product.variants.find(v => v.id === selectedVariantId)
+  const colorGroups = Object.values(
+    product.variants.reduce<Record<string, ColorGroup>>((acc, variant) => {
+      const color = (variant.metadata?.color as string) || "#4a5e4a"
+      if (!acc[color]) acc[color] = { color, available: false, variants: [] }
+      acc[color].variants.push(variant)
+      acc[color].available = acc[color].variants.some(v => v.available)
+      return acc
+    }, {})
+  )
 
+  const firstAvailableColor = colorGroups.find(g => g.available)?.color
+  const [selectedColor, setSelectedColor] = useState<string | null>(firstAvailableColor || colorGroups[0]?.color || null)
+  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null)
+  const [isAdding, setIsAdding] = useState(false)
+  const countryCode = useParams().countryCode as string
 
-  const sizes = MOCK_SIZES
-  // not sure
+  const selectedGroup = colorGroups.find(g => g.color === selectedColor)
+
+  const selectedVariant = selectedGroup?.variants.find(v => v.id === selectedVariantId) || selectedGroup?.variants[0]
+
   const preorderPrice = selectedVariant?.calculated_price?.calculated_amount
   const preOrderDate = product.custom.pre_order_date
   const isPreorderActive = !!preOrderDate && new Date(preOrderDate) > new Date()
+
+  const handleAddToCart = async () => {
+    if (!selectedVariant?.id) return
+    setIsAdding(true)
+    await addToCart({ variantId: selectedVariant.id, quantity: 1, countryCode })
+    setIsAdding(false)
+  }
 
   return (
     <div className="flex flex-col justify-between h-full max-w-[290px] w-full">
@@ -70,41 +89,43 @@ export const ProductActions: FC<IProductActions> = ({ product }) => {
         {product?.variants && product.variants.length > 0 && (
           <div>
             <p className="font-text text-sm mb-3">Available in:</p>
-            <div className="flex gap-2">
-              {product.variants.map((variant, i) => (
+            <div className="ml-1 flex gap-2">
+              {colorGroups.map(group => (
                 <ColorSwatch
-                  onClick={() => setSelectedVariantId(variant.id)}
-                  key={variant.id}
-                  value={variant.metadata?.color || "#4a5e4a"}
-                  selected={variant.id === selectedVariantId}
-                  available={variant.available}
+                  onClick={() => setSelectedColor(group.color)}
+                  key={group.color}
+                  value={group.color}
+                  selected={group.color === selectedColor}
+                  available={group.available}
                 />
               ))}
             </div>
           </div>
         )}
 
-        <div>
-          <div className="flex items-center gap-2 flex-wrap mb-3">
-            {sizes.map((s, i) => (
-              <SizeButton key={i} label={s.label} available={s.available} />
-            ))}
+        {selectedGroup && <div>
+            <div className="flex items-center gap-2 flex-wrap mb-3">
+              {selectedGroup.variants.map((vrnt, i) => (
+                <SizeButton key={i} label={vrnt.metadata?.size || 'M'} available={vrnt.available} selected={selectedVariant?.id === vrnt.id} onClick={() => setSelectedVariantId(vrnt.id)} />
+              ))}
+            </div>
+            <SizeChart size_chart_string={product.metadata?.size_chart} />
           </div>
-          <SizeChart size_chart_string={product.metadata?.size_chart} />
-        </div>
+        }
       </div>
 
       <div className="mt-auto">
         {isPreorderActive && <PreorderCountdown targetDate={preOrderDate} />}
 
         {isPreorderActive && (
-          <LocalizedClientLink
-            href={`/products/${product.handle}`}
-            className="flex items-center justify-between w-full bg-black text-white font-text text-sm px-5 py-4 hover:bg-black/80 transition-colors"
+          <button
+            onClick={handleAddToCart}
+            disabled={isAdding || !selectedVariant}
+            className="flex items-center justify-between w-full bg-black text-white font-text text-sm px-5 py-4 hover:bg-black/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span>Preorder</span>
+            <span>{isAdding ? "Adding..." : "Preorder"}</span>
             <span>→</span>
-          </LocalizedClientLink>
+          </button>
         )}
 
         {!isPreorderActive && (

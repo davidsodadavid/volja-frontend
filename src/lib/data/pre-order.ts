@@ -6,7 +6,10 @@ import { getAuthHeaders } from "./cookies"
 
 export type PreOrderVariant = Omit<HttpTypes.StoreProductVariant, "metadata"> & {
   available: boolean
-  metadata: { color?: string } | null
+  metadata: {
+    color?: string
+    size?: string
+  } | null
 }
 
 export type PreOrderProduct = Omit<HttpTypes.StoreProduct, "variants"> & {
