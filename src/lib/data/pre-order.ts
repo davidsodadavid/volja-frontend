@@ -17,6 +17,7 @@ export type PreOrderProduct = Omit<HttpTypes.StoreProduct, "variants"> & {
   variants: PreOrderVariant[]
   metadata: {
     size_chart: string
+    bg_color: string
   }
   custom: {
     pre_order_date: string

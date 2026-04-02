@@ -4,7 +4,7 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import CartButton from "@modules/layout/components/cart-button"
 import NavLinks from "@modules/layout/components/nav-links"
 import MobileMenu from "@modules/layout/components/mobile-menu"
-import NavWrapper from "@modules/layout/components/nav-wrapper"
+import NavWrapper from "@modules/layout/components/nav-wrapper/NavWrapperServer"
 import Image from "next/image"
 import Link from "next/link"
 
