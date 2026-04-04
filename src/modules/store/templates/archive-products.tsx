@@ -1,20 +1,15 @@
-import { listInStockProducts } from "@lib/data/products"
+import { listArchiveProducts } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import ProductPreview from "@modules/products/components/product-preview"
 import { Pagination } from "@modules/store/components/pagination"
-import { SortOptions } from "@modules/store/components/refinement-list/sort-products"
 
 const PRODUCT_LIMIT = 12
 
-export default async function PaginatedProducts({
+export default async function ArchiveProducts({
   page,
   countryCode,
 }: {
-  sortBy?: SortOptions
   page: number
-  collectionId?: string
-  categoryId?: string
-  productsIds?: string[]
   countryCode: string
 }) {
   const region = await getRegion(countryCode)
@@ -23,19 +18,23 @@ export default async function PaginatedProducts({
     return null
   }
 
-  const { products, count } = await listInStockProducts({ page, limit: PRODUCT_LIMIT, countryCode })
+  const { products, count } = await listArchiveProducts({ page, limit: PRODUCT_LIMIT, countryCode })
+
+  if (!products.length) {
+    return null
+  }
 
   const totalPages = Math.ceil(count / PRODUCT_LIMIT)
 
   return (
     <div className="bg-white w-full">
       <div className="content-container pt-20 pb-10">
-        <h1 className="text-[60px] font-text">Shop</h1>
-        <p className="font-text text-sm mb-6">Stuff I made and is available now:</p>
+        <h1 className="text-[60px] font-text">Archive</h1>
+        <p className="font-text text-sm mb-6">Stuff someone is wearing right now:</p>
 
         <ul
           className="grid grid-cols-1 2xsmall:grid-cols-2 xsmall:grid-cols-3 small:grid-cols-4 w-full"
-          data-testid="products-list"
+          data-testid="archive-products-list"
         >
           {products.map((p) => (
             <li key={p.id}>
@@ -47,7 +46,7 @@ export default async function PaginatedProducts({
         {totalPages > 1 && (
           <div className="py-8">
             <Pagination
-              data-testid="product-pagination"
+              data-testid="archive-pagination"
               page={page}
               totalPages={totalPages}
             />

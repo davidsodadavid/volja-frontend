@@ -85,6 +85,65 @@ export const listProducts = async ({
     })
 }
 
+export const listArchiveProducts = async ({
+  page = 1,
+  limit = 12,
+  countryCode,
+}: {
+  page?: number
+  limit?: number
+  countryCode: string
+}): Promise<{ products: HttpTypes.StoreProduct[]; count: number }> => {
+  const region = await getRegion(countryCode)
+  const offset = (page - 1) * limit
+  const currency_code = region?.currency_code ?? "eur"
+
+  const headers = {
+    ...(await getAuthHeaders()),
+  }
+
+  return sdk.client
+    .fetch<{ products: HttpTypes.StoreProduct[]; count: number }>(
+      `/store/archive?limit=${limit}&offset=${offset}&currency_code=${currency_code}`,
+      {
+        method: "GET",
+        headers,
+        cache: "no-store",
+      }
+    )
+    .then(({ products, count }) => ({ products, count }))
+}
+
+export const listInStockProducts = async ({
+  page = 1,
+  limit = 12,
+  countryCode,
+}: {
+  page?: number
+  limit?: number
+  countryCode: string
+}): Promise<{ products: HttpTypes.StoreProduct[]; count: number }> => {
+  const region = await getRegion(countryCode)
+  const offset = (page - 1) * limit
+
+  const headers = {
+    ...(await getAuthHeaders()),
+  }
+
+  const currency_code = region?.currency_code ?? "eur"
+
+  return sdk.client
+    .fetch<{ products: HttpTypes.StoreProduct[]; count: number }>(
+      `/store/in-stock?limit=${limit}&offset=${offset}&currency_code=${currency_code}`,
+      {
+        method: "GET",
+        headers,
+        cache: "no-store",
+      }
+    )
+    .then(({ products, count }) => ({ products, count }))
+}
+
 /**
  * This will fetch 100 products to the Next.js cache and sort them based on the sortBy parameter.
  * It will then return the paginated products based on the page and limit parameters.

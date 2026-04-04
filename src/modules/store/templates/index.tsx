@@ -5,6 +5,10 @@ import { SortOptions } from "@modules/store/components/refinement-list/sort-prod
 import { listPreOrderProducts } from "@lib/data/pre-order"
 import { PreorderSection } from "@modules/store/components/product-sections/PreorderSection"
 import { BeingMadeRightNow } from "@modules/store/components/product-sections/BeingMadeRightNow"
+import { Suspense } from "react"
+import PaginatedProducts from "@modules/store/templates/paginated-products"
+import SkeletonProductGrid from "@modules/skeletons/templates/skeleton-product-grid"
+import ArchiveProducts from "@modules/store/templates/archive-products"
 
 const StoreTemplate = async ({
   sortBy,
@@ -28,41 +32,26 @@ const StoreTemplate = async ({
     (p) => new Date(p.custom.pre_order_date) <= now
   )
 
-  console.log(beingMadeRightNowProducts, 'bmrn')
-
   return (
     <div className="flex flex-col">
       <PreorderSection products={preorderProducts} />
       <BeingMadeRightNow products={beingMadeRightNowProducts} />
-      {/*<Suspense fallback={<SkeletonProductGrid />}>*/}
-      {/*  <PreOrderProducts countryCode={countryCode} products={upcoming} />*/}
-      {/*</Suspense>*/}
+
+       <Suspense fallback={<SkeletonProductGrid />}>
+         <PaginatedProducts
+           sortBy={sort}
+           page={pageNumber}
+           countryCode={countryCode}
+         />
+       </Suspense>
+      <Suspense fallback={<SkeletonProductGrid />}>
+        <ArchiveProducts
+          page={pageNumber}
+          countryCode={countryCode}
+        />
+      </Suspense>
     </div>
   )
-
-  // return (
-  //   <div
-  //     className="flex flex-col small:flex-row small:items-start py-6 content-container"
-  //     data-testid="category-container"
-  //   >
-  //     {/*<RefinementList sortBy={sort} />*/}
-  //     <div className="w-full">
-  //       <Suspense fallback={<SkeletonProductGrid />}>
-  //         <PreOrderProducts countryCode={countryCode} />
-  //       </Suspense>
-  //       <div className="mb-8 text-2xl-semi">
-  //         <h1 data-testid="store-page-title">Archive</h1>
-  //       </div>
-  //       <Suspense fallback={<SkeletonProductGrid />}>
-  //         <PaginatedProducts
-  //           sortBy={sort}
-  //           page={pageNumber}
-  //           countryCode={countryCode}
-  //         />
-  //       </Suspense>
-  //     </div>
-  //   </div>
-  // )
 }
 
 export default StoreTemplate
