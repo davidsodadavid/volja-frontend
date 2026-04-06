@@ -20,7 +20,7 @@ export const FeaturedProduct: FC<IPreorderProduct> = ({ product }) => {
           thumbnail={product.thumbnail}
           title={product.title}
         />
-        <ProductActions product={product} />
+        <ProductActions variants={product.variants} size_chart={product.metadata.size_chart as string} pre_order_date={product.custom.pre_order_date} />
       </div>
 
       {/* Small: vertical — gallery | description | actions */}
@@ -31,7 +31,7 @@ export const FeaturedProduct: FC<IPreorderProduct> = ({ product }) => {
           title={product.title}
         />
         <ProductInfo product={product} />
-        <ProductActions product={product} />
+        <ProductActions variants={product.variants} size_chart={product.metadata.size_chart as string} pre_order_date={product.custom.pre_order_date} />
       </div>
     </div>
   )

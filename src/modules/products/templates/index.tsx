@@ -1,31 +1,17 @@
-import React, { Suspense } from "react"
+import React from "react"
 
-import ImageGallery from "@modules/products/components/image-gallery"
-import ProductActions from "@modules/products/components/product-actions"
-import ProductOnboardingCta from "@modules/products/components/product-onboarding-cta"
-import ProductTabs from "@modules/products/components/product-tabs"
-import RelatedProducts from "@modules/products/components/related-products"
 import ProductInfo from "@modules/products/templates/product-info/ProductInfo"
-import SkeletonRelatedProducts from "@modules/skeletons/templates/skeleton-related-products"
 import { notFound } from "next/navigation"
-import ProductActionsWrapper from "./product-actions-wrapper"
 import { HttpTypes } from "@medusajs/types"
-import ProductTable from "@modules/products/components/product-sizechart"
+import { ProductImageGallery } from "@modules/store/components/products/ProductGallery"
+import { ProductActions } from "@modules/store/components/products/ProductActions"
+import { PreOrderVariant } from "@lib/data/pre-order"
 
 type ProductTemplateProps = {
   product: HttpTypes.StoreProduct
   region: HttpTypes.StoreRegion
   countryCode: string
 }
-
-type TableProps = {
-  table: {
-    rowHeaders: string[]
-    colHeaders: string[]
-    data: string[][]
-  }
-}
-
 
 const ProductTemplate: React.FC<ProductTemplateProps> = ({
   product,
@@ -36,52 +22,44 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
     return notFound()
   }
 
-  return (
-    <>
-      <div
-        style={{ backgroundColor: (product.metadata?.colors as { hex: string, name: string }[])?.[0]?.hex ?? "000" }} className="content-container flex flex-col small:flex-row small:items-start py-6 relative"
-        data-testid="product-container"
-      >
-        <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[400px] w-full py-8 gap-y-6">
-          <ProductInfo product={product} />
-        </div>
-        <div className="block w-full relative">
-          <ImageGallery images={product?.images || []} />
-        </div>
-        <div className="flex flex-col small:sticky small:top-48 small:py-0 small:max-w-[400px] w-full py-8 gap-y-6">
-          <ProductTabs product={product} />
-          
-          <ProductTable
-            table={product.metadata?.table as {
-              rowHeaders: string[]
-              colHeaders: string[]
-              data: string[][]
-            }}
-          />
-          <ProductOnboardingCta />
-          <Suspense
-            fallback={
-              <ProductActions
-                disabled={true}
-                product={product}
-                region={region}
-              />
-            }
-          >
 
-            <ProductActionsWrapper id={product.id} region={region} />
-          </Suspense>
-        </div>
+  const newVariants = (product.variants || []).map(v => {
+    // @ts-ignore
+    const variantClone: PreOrderVariant = {
+      ...v,
+      available: true
+    }
+    return variantClone
+  })
+
+  return (
+    <div className="w-full">
+      <div className="content-container">
+          <div className="w-full py-12">
+            {/* Large: 3-column — description | gallery | actions */}
+            <div className="hidden lg:flex gap-5 justify-between h-[640px]">
+              <ProductInfo product={product} />
+              <ProductImageGallery
+                images={product.images}
+                thumbnail={product.thumbnail}
+                title={product.title}
+              />
+              <ProductActions variants={newVariants} size_chart={product.metadata?.size_chart as string}  />
+            </div>
+
+            {/* Small: vertical — gallery | description | actions */}
+            <div className="flex flex-col gap-6 lg:hidden">
+              <ProductImageGallery
+                images={product.images}
+                thumbnail={product.thumbnail}
+                title={product.title}
+              />
+              <ProductInfo product={product} />
+              <ProductActions variants={newVariants} size_chart={product.metadata?.size_chart as string} />
+            </div>
+          </div>
       </div>
-      <div
-        className="content-container my-16 small:my-32"
-        data-testid="related-products-container"
-      >
-        {/* <Suspense fallback={<SkeletonRelatedProducts />}>
-          <RelatedProducts product={product} countryCode={countryCode} />
-        </Suspense> */}
-      </div>
-    </>
+    </div>
   )
 }
 

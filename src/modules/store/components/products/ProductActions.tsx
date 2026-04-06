@@ -1,19 +1,13 @@
 "use client"
 
 import { FC, useState } from "react"
-import { PreOrderProduct } from "@lib/data/pre-order"
+import { PreOrderVariant } from "@lib/data/pre-order"
 import { addToCart } from "@lib/data/cart"
 import { useParams } from "next/navigation"
 import { PreorderCountdown } from "./PreorderCountdown"
 import { DiagonalSlash } from "@modules/store/components/products/DiagonalSlash"
 import { ColorSwatch } from "@modules/store/components/products/ColorSwatch"
 import { SizeChart } from "@modules/store/components/products/SizeChart"
-
-
-interface IProductActions {
-  product: PreOrderProduct
-}
-
 
 const SizeButton: FC<{ label: string; available: boolean; selected?: boolean; onClick?: () => void }> = ({ label, available, selected, onClick }) => {
   if (!available) {
@@ -35,11 +29,17 @@ const SizeButton: FC<{ label: string; available: boolean; selected?: boolean; on
   )
 }
 
-export const ProductActions: FC<IProductActions> = ({ product }) => {
-  type ColorGroup = { color: string; available: boolean; variants: typeof product.variants }
+interface IProductActions {
+  variants: PreOrderVariant[]
+  size_chart: string
+  pre_order_date?: string
+}
+
+export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_order_date }) => {
+  type ColorGroup = { color: string; available: boolean; variants: typeof variants }
 
   const colorGroups = Object.values(
-    product.variants.reduce<Record<string, ColorGroup>>((acc, variant) => {
+    variants.reduce<Record<string, ColorGroup>>((acc, variant) => {
       const color = (variant.metadata?.color as string) || "#4a5e4a"
       if (!acc[color]) acc[color] = { color, available: false, variants: [] }
       acc[color].variants.push(variant)
@@ -59,8 +59,19 @@ export const ProductActions: FC<IProductActions> = ({ product }) => {
   const selectedVariant = selectedGroup?.variants.find(v => v.id === selectedVariantId) || selectedGroup?.variants[0]
 
   const preorderPrice = selectedVariant?.calculated_price?.calculated_amount
-  const preOrderDate = product.custom.pre_order_date
-  const isPreorderActive = !!preOrderDate && new Date(preOrderDate) > new Date()
+
+  enum ProductStatus {
+    Preorder = "preorder",
+    BeingMade = "being_made",
+    Active = "active",
+  }
+
+  let status: ProductStatus = ProductStatus.Active
+  if (pre_order_date && new Date(pre_order_date) > new Date()) {
+    status = ProductStatus.Preorder
+  } else if (pre_order_date && new Date(pre_order_date) <= new Date()) {
+    status = ProductStatus.BeingMade
+  }
 
   const handleAddToCart = async () => {
     if (!selectedVariant?.id) return
@@ -86,7 +97,7 @@ export const ProductActions: FC<IProductActions> = ({ product }) => {
           </div>
         )}
 
-        {product?.variants && product.variants.length > 0 && (
+        {variants && variants.length > 0 && (
           <div>
             <p className="font-text text-sm mb-3">Available in:</p>
             <div className="ml-1 flex gap-2">
@@ -109,15 +120,15 @@ export const ProductActions: FC<IProductActions> = ({ product }) => {
                 <SizeButton key={i} label={vrnt.metadata?.size || 'M'} available={vrnt.available} selected={selectedVariant?.id === vrnt.id} onClick={() => setSelectedVariantId(vrnt.id)} />
               ))}
             </div>
-            <SizeChart size_chart_string={product.metadata?.size_chart} />
+            <SizeChart size_chart_string={size_chart} />
           </div>
         }
       </div>
 
       <div className="mt-auto">
-        {isPreorderActive && <PreorderCountdown targetDate={preOrderDate} />}
+        {pre_order_date && status === ProductStatus.Preorder && <PreorderCountdown targetDate={pre_order_date} />}
 
-        {isPreorderActive && (
+        {status === ProductStatus.Preorder && (
           <button
             onClick={handleAddToCart}
             disabled={isAdding || !selectedVariant}
@@ -128,14 +139,14 @@ export const ProductActions: FC<IProductActions> = ({ product }) => {
           </button>
         )}
 
-        {!isPreorderActive && (
+        {status === ProductStatus.BeingMade && (
           <p className="w-1/2 mb-4 text-xs">
             I guess you missed it! I can let you know if it is available in the
             shop.
           </p>
         )}
 
-        {!isPreorderActive && (
+        {status === ProductStatus.BeingMade && (
           <input
             type="email"
             placeholder="Enter email"
@@ -143,9 +154,20 @@ export const ProductActions: FC<IProductActions> = ({ product }) => {
           />
         )}
 
-        {!isPreorderActive && (
+        {status === ProductStatus.BeingMade && (
           <button className="flex items-center justify-between w-full bg-black text-white font-text text-[30px] px-3 py-2 hover:bg-black/80 transition-colors">
             Get Notified
+          </button>
+        )}
+
+        {status === ProductStatus.Active && (
+          <button
+            onClick={handleAddToCart}
+            disabled={isAdding || !selectedVariant}
+            className="flex items-center justify-between w-full bg-black text-white font-text text-sm px-5 py-4 hover:bg-black/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <span>{isAdding ? "Adding..." : "Add to cart"}</span>
+            <span>→</span>
           </button>
         )}
       </div>
