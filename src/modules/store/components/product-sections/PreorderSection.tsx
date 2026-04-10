@@ -9,7 +9,7 @@ interface IPreorderSection {
 export const PreorderSection: FC<IPreorderSection> = ({ products }) => {
   if(products.length === 0) return null
 
-  const backgroundColor = products[0].metadata.bg_color
+  const backgroundColor = products[0].metadata?.bg_color || 'white'
 
   return (
     <div className="w-full" style={{ backgroundColor }}>
