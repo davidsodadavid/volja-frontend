@@ -120,7 +120,7 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
                 <SizeButton key={i} label={vrnt.metadata?.size || 'M'} available={vrnt.available} selected={selectedVariant?.id === vrnt.id} onClick={() => setSelectedVariantId(vrnt.id)} />
               ))}
             </div>
-            <SizeChart size_chart_string={size_chart} />
+          {size_chart && <SizeChart size_chart_string={size_chart} />}
           </div>
         }
       </div>
