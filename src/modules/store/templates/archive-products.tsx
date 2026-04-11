@@ -33,12 +33,12 @@ export default async function ArchiveProducts({
         <p className="font-text text-sm mb-6">Stuff someone is wearing right now:</p>
 
         <ul
-          className="grid grid-cols-1 2xsmall:grid-cols-2 xsmall:grid-cols-3 small:grid-cols-4 w-full"
+          className="grid grid-cols-1 2xsmall:grid-cols-2 xsmall:grid-cols-3 small:grid-cols-4 w-full gap-4"
           data-testid="archive-products-list"
         >
           {products.map((p) => (
             <li key={p.id}>
-              <ProductPreview product={p} region={region} thumbnailSize="full" thumbnailClassName="!aspect-[3/4]" />
+              <ProductPreview isArchive product={p} region={region} thumbnailSize="full" thumbnailClassName="!aspect-[3/4]" />
             </li>
           ))}
         </ul>

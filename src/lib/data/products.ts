@@ -104,7 +104,7 @@ export const listArchiveProducts = async ({
 
   return sdk.client
     .fetch<{ products: HttpTypes.StoreProduct[]; count: number }>(
-      `/store/archive?limit=${limit}&offset=${offset}&currency_code=${currency_code}`,
+      `/store/archive?limit=${limit}&offset=${offset}&currency_code=${currency_code}&region_id=${region?.id}`,
       {
         method: "GET",
         headers,
@@ -134,7 +134,7 @@ export const listInStockProducts = async ({
 
   return sdk.client
     .fetch<{ products: HttpTypes.StoreProduct[]; count: number }>(
-      `/store/in-stock?limit=${limit}&offset=${offset}&currency_code=${currency_code}`,
+      `/store/in-stock?limit=${limit}&offset=${offset}&currency_code=${currency_code}&region_id=${region?.id}`,
       {
         method: "GET",
         headers,
