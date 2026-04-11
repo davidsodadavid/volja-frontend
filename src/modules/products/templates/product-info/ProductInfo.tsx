@@ -6,9 +6,6 @@ type ProductInfoProps = {
 
 
 const ProductInfo = ({ product }: ProductInfoProps) => {
-
-  console.log(product, 'wtfff')
-
   return (
     <div id="product-info">
       <div className="flex flex-col gap-y-4 lg:max-w-[280px] mx-auto">

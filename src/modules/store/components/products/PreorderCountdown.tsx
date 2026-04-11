@@ -8,7 +8,7 @@ interface PreorderCountdownProps {
 }
 
 export const PreorderCountdown: FC<PreorderCountdownProps> = ({ targetDate }) => {
-  const { h, m, s, expired } = useCountdown(targetDate)
+  const { days, h, m, s, expired } = useCountdown(targetDate)
 
   if (expired) {
     return null
@@ -17,9 +17,15 @@ export const PreorderCountdown: FC<PreorderCountdownProps> = ({ targetDate }) =>
   return (
     <div className="mb-4">
       <p className="font-text text-sm mb-1">Preorder ends in:</p>
-      <p className="font-display text-5xl font-bold tabular-nums">
-        {h}:{m}:{s}
-      </p>
+      {days > 0 ? (
+        <p className="font-display text-5xl font-bold tabular-nums">
+          {days} {days === 1 ? "day" : "days"}
+        </p>
+      ) : (
+        <p className="font-display text-5xl font-bold tabular-nums">
+          {h}:{m}:{s}
+        </p>
+      )}
     </div>
   )
 }
