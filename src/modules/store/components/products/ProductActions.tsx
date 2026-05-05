@@ -132,10 +132,10 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
           <button
             onClick={handleAddToCart}
             disabled={isAdding || !selectedVariant}
-            className="flex items-center justify-between w-full bg-black text-white font-text text-sm px-5 py-4 hover:bg-black/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-full disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span>{isAdding ? "Adding..." : "Preorder"}</span>
-            <span>→</span>
+            <span className="transition-transform duration-300 group-hover:translate-x-5">{isAdding ? "Adding..." : "Preorder"}</span>
+            <span>&rarr;</span>
           </button>
         )}
 
@@ -164,10 +164,10 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
           <button
             onClick={handleAddToCart}
             disabled={isAdding || !selectedVariant}
-            className="flex items-center justify-between w-full bg-black text-white font-text text-sm px-5 py-4 hover:bg-black/80 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-full disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span>{isAdding ? "Adding..." : "Add to cart"}</span>
-            <span>→</span>
+            <span className="transition-transform duration-300 group-hover:translate-x-5">{isAdding ? "Adding..." : "Add to cart"}</span>
+            <span>&rarr;</span>
           </button>
         )}
       </div>
