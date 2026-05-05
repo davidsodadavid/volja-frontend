@@ -4,14 +4,28 @@ import LocalizedClientLink from "@modules/common/components/localized-client-lin
 import CartButton from "@modules/layout/components/cart-button"
 import NavLinks from "@modules/layout/components/nav-links"
 import MobileMenu from "@modules/layout/components/mobile-menu"
-import NavWrapper from "@modules/layout/components/nav-wrapper/NavWrapperServer"
+import NavWrapper from "@modules/layout/components/nav-wrapper"
+import { listPreOrderProducts } from "@lib/data/pre-order"
 import Image from "next/image"
 import Link from "next/link"
 
 export default async function Nav() {
+  const preOrderProducts = await listPreOrderProducts()
+
+  const now = new Date()
+  const activePreorder = preOrderProducts.find(
+    (p) => new Date(p.custom.pre_order_date) > now
+  )
+  const beingMadeRightNowProducts = preOrderProducts.find(
+    (p) => new Date(p.custom.pre_order_date) <= now
+  )
+
+  const featuredProduct = activePreorder || beingMadeRightNowProducts
+  const shopBgColor = featuredProduct?.metadata?.bg_color ?? "#ffffff"
+
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">
-      <NavWrapper>
+      <NavWrapper shopBgColor={shopBgColor}>
         <nav className="content-container font-display text-[30px] flex items-center justify-between w-full h-full">
           <div className="flex-1 basis-0 h-full flex items-center">
             <div className="relative w-full small:w-2/3 h-[30px] flex items-center">
@@ -46,7 +60,7 @@ export default async function Nav() {
             </Suspense>
           </div>
 
-          <MobileMenu />
+          <MobileMenu shopBgColor={shopBgColor} />
         </nav>
       </NavWrapper>
     </div>

@@ -3,9 +3,15 @@
 import { useState } from "react"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import NavLinks from "@modules/layout/components/nav-links"
+import { useParams, usePathname } from "next/navigation"
 
-export default function MobileMenu() {
+export default function MobileMenu({ shopBgColor = "#ffffff" }: { shopBgColor?: string }) {
   const [open, setOpen] = useState(false)
+  const { countryCode } = useParams()
+  const pathname = usePathname()
+  const isShop = pathname?.startsWith(`/${countryCode}/store`)
+
+  const bgColor = isShop ? shopBgColor : "#ffffff"
 
   return (
     <>
@@ -20,7 +26,7 @@ export default function MobileMenu() {
       </button>
 
       {open && (
-        <div className="small:hidden absolute top-full left-0 w-full bg-white z-50 border-b border-ui-border-base">
+        <div className="small:hidden absolute top-full left-0 w-full z-50 border-b-2 border-black" style={{ backgroundColor: bgColor }}>
           <div className="content-container flex flex-col gap-6 py-8 font-display text-[30px]" onClick={() => setOpen(false)}>
             <NavLinks />
             <LocalizedClientLink href="/cart">
