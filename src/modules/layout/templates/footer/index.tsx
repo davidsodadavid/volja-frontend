@@ -73,8 +73,14 @@ export default async function Footer() {
           <a href="/terms" className="underline">
             Terms and Conditions
           </a>
-          <a href="/cookies" className="underline">
-            Cookies
+          <a href="/privacy" className="underline">
+            Privacy Policy
+          </a>
+          <a href="/faq" className="underline">
+            FAQ
+          </a>
+          <a href="/shipping-returns" className="underline">
+            Shipping & Returns
           </a>
         </div>
       </div>
