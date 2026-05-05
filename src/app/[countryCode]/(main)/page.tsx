@@ -28,7 +28,7 @@ export default async function Home(props: {
 
   return (
     <>
-      <main className="content-container flex flex-col gap-16 py-20">
+      <main className="content-container flex flex-col gap-12 py-20">
         <TextImageRow url="/images/1.png">
           <ul className="list-none font-display leading-10 w-fit mx-auto [&>li]:flex [&>li]:gap-[10px] [&>li]:items-baseline [&>li::before]:content-['–'] [&>li::before]:w-6 [&>li::before]:text-center [&>li::before]:flex-shrink-0">
             <li className="text-[30px] font-bold">ATELJE</li>
