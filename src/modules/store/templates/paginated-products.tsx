@@ -31,7 +31,9 @@ export default async function PaginatedProducts({
     <div className="bg-white w-full">
       <div className="content-container pt-20 pb-10">
         <h1 className="text-[60px] font-text">Shop</h1>
-        <p className="font-text text-sm mb-6">Stuff I made and is available now:</p>
+        <p className="font-text text-sm mb-6">
+          Freshly made and available until supplies last!
+        </p>
 
         <ul
           className="grid grid-cols-1 2xsmall:grid-cols-2 xsmall:grid-cols-3 small:grid-cols-4 w-full gap-4"
@@ -39,7 +41,12 @@ export default async function PaginatedProducts({
         >
           {products.map((p) => (
             <li key={p.id}>
-              <ProductPreview product={p} region={region} thumbnailSize="full" thumbnailClassName="!aspect-[3/4]" />
+              <ProductPreview
+                product={p}
+                region={region}
+                thumbnailSize="full"
+                thumbnailClassName="!aspect-[3/4]"
+              />
             </li>
           ))}
         </ul>

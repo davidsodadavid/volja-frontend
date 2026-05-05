@@ -30,7 +30,9 @@ export default async function ArchiveProducts({
     <div className="bg-white w-full">
       <div className="content-container pt-20 pb-10">
         <h1 className="text-[60px] font-text">Archive</h1>
-        <p className="font-text text-sm mb-6">Stuff someone is wearing right now:</p>
+        <p className="font-text text-sm mb-6">
+          Previous batches living a full life.
+        </p>
 
         <ul
           className="grid grid-cols-1 2xsmall:grid-cols-2 xsmall:grid-cols-3 small:grid-cols-4 w-full gap-4"
@@ -38,7 +40,13 @@ export default async function ArchiveProducts({
         >
           {products.map((p) => (
             <li key={p.id}>
-              <ProductPreview isArchive product={p} region={region} thumbnailSize="full" thumbnailClassName="!aspect-[3/4]" />
+              <ProductPreview
+                isArchive
+                product={p}
+                region={region}
+                thumbnailSize="full"
+                thumbnailClassName="!aspect-[3/4]"
+              />
             </li>
           ))}
         </ul>
