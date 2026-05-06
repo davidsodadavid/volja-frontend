@@ -22,9 +22,9 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
   }
 
   return (
-    <div className="flex flex-col lg:flex-row gap-4 lg:h-full">
-      <div className="w-full lg:w-[432px] lg:flex-shrink-0 lg:h-full">
-        <div className="relative w-full aspect-[2/3] max-h-[480px] lg:max-h-none lg:aspect-auto lg:h-full overflow-hidden">
+    <div className="flex flex-col lg:flex-row gap-4">
+      <div className="w-full lg:w-[432px] lg:flex-shrink-0">
+        <div className="relative w-full aspect-[3/4] overflow-hidden">
           {activeImage && (
             <Image
               src={activeImage}
@@ -40,7 +40,7 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
       </div>
       {hasMultipleImages && (
         <div
-          className="flex gap-3 flex-row overflow-x-auto h-16 lg:flex-col lg:overflow-x-hidden lg:overflow-y-auto lg:h-auto lg:max-h-[640px] lg:w-16 lg:flex-shrink-0 scrollbar-hide"
+          className="flex gap-3 flex-row overflow-x-auto h-16 lg:flex-col lg:overflow-x-hidden lg:overflow-y-auto lg:h-auto lg:max-h-[576px] lg:w-16 lg:flex-shrink-0 scrollbar-hide"
           style={{ scrollbarWidth: "none" }}
         >
           {resolvedImages.map((img, i) => (
@@ -49,7 +49,7 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
               type="button"
               onClick={() => setActiveImage(img.url)}
               className={getThumbnailClass(img.url)}
-              style={{ aspectRatio: "2/3" }}
+              style={{ aspectRatio: "3/4" }}
             >
               <Image src={img.url} alt="" fill className="object-cover" sizes="80px" />
             </button>

@@ -14,9 +14,10 @@ export const PreorderSection: FC<IPreorderSection> = ({ products }) => {
   return (
     <div className="w-full" style={{ backgroundColor }}>
       <div className="content-container">
-        <h1 className="text-[60px] font-text mt-20">Preorder</h1>
+        <h1 className="text-[50px] font-text mt-12">Preorder</h1>
         <p className="font-text text-sm">
-          A batch of our {products[0].title.charAt(0).toUpperCase() + products[0].title.slice(1).toLowerCase()} will be made on {new Date(products[0].custom.pre_order_date).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}.
+          A batch production of our {products[0].title.charAt(0).toUpperCase() + products[0].title.slice(1).toLowerCase()} will start on {new Date(products[0].custom.pre_order_date).toLocaleDateString("en-US", { day: "numeric", month: "long", year: "numeric" })}.
+          <br />
           Preorder please and thank you!
         </p>
 
