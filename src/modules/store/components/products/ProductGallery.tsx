@@ -66,7 +66,7 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
     <div className="flex flex-col lg:flex-row gap-4">
       <div className="w-full lg:w-[432px] lg:flex-shrink-0">
         <div
-          className="relative w-full aspect-[4/5] overflow-hidden lg:cursor-default cursor-pointer select-none"
+          className="relative w-full aspect-[3/4] overflow-hidden lg:cursor-default cursor-pointer select-none"
           onTouchStart={handleTouchStart}
           onTouchMove={handleTouchMove}
           onTouchEnd={handleTouchEnd}
