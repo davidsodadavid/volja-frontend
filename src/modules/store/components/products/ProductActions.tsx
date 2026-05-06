@@ -85,7 +85,9 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
       <div className="space-y-5">
         {preorderPrice && (
           <div>
-            <p className="font-text text-sm mb-1">Preorder price:</p>
+            {status === ProductStatus.Preorder && (
+              <p className="font-text text-sm mb-1">Preorder price:</p>
+            )}
             <div className="flex items-baseline gap-3">
               <span className="font-display text-4xl font-bold">
                 {preorderPrice} <span className="text-3xl">€</span>
@@ -99,7 +101,6 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
 
         {variants && variants.length > 0 && (
           <div>
-            <p className="font-text text-sm mb-3">Available in:</p>
             <div className="ml-1 flex gap-2">
               {colorGroups.map(group => (
                 <ColorSwatch
