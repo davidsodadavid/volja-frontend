@@ -29,7 +29,7 @@ export default async function ArchiveProducts({
   return (
     <div className="bg-white w-full">
       <div className="content-container pt-20 pb-10">
-        <h1 className="text-[60px] font-text">Archive</h1>
+        <h1 className="text-[50px] font-text">Archive</h1>
         <p className="font-text text-sm mb-6">
           Previous batches living a full life.
         </p>

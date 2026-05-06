@@ -12,7 +12,7 @@ export const BeingMadeRightNow: FC<IPreorderSection> = ({ products }) => {
   return (
     <div className="bg-white w-full">
       <div className="content-container">
-        <h1 className="text-[60px] font-text mt-20">In progress</h1>
+        <h1 className="text-[50px] font-text mt-20">In progress</h1>
         <p className="font-text text-sm">
           A batch of our {products[0].title.charAt(0).toUpperCase() + products[0].title.slice(1).toLowerCase()} is being made right now. Keep
           calm and follow our mailing list and instagram for updates.
