@@ -1,6 +1,6 @@
 "use client"
 
-import { FC, useState } from "react"
+import { FC, useState, useRef, useEffect } from "react"
 import Image from "next/image"
 
 interface IProductImageGallery {
@@ -11,9 +11,13 @@ interface IProductImageGallery {
 
 export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnail, title }) => {
   const resolvedImages = images?.length ? images : thumbnail ? [{ url: thumbnail }] : []
-  const [activeImage, setActiveImage] = useState(resolvedImages[0]?.url ?? null)
+  const [activeIndex, setActiveIndex] = useState(0)
   const hasMultipleImages = resolvedImages.length > 1
 
+  const touchStartX = useRef<number | null>(null)
+  const touchEndX = useRef<number | null>(null)
+
+  const activeImage = resolvedImages[activeIndex]?.url ?? null
 
   function getThumbnailClass(imgUrl: string) {
     const base = "relative h-full w-auto lg:h-auto lg:w-full flex-shrink-0 overflow-hidden transition-opacity"
@@ -21,10 +25,57 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
     return `${base} opacity-40 hover:opacity-70`
   }
 
+  function goToNext() {
+    setActiveIndex(prev => (prev + 1) % resolvedImages.length)
+  }
+
+  function goToPrev() {
+    setActiveIndex(prev => (prev - 1 + resolvedImages.length) % resolvedImages.length)
+  }
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    touchEndX.current = e.touches[0].clientX
+  }
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return
+    const diff = touchStartX.current - touchEndX.current
+    const threshold = 50
+    if (diff > threshold) {
+      goToNext()
+    } else if (diff < -threshold) {
+      goToPrev()
+    }
+  }
+
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === "ArrowRight") goToNext()
+      if (e.key === "ArrowLeft") goToPrev()
+    }
+    window.addEventListener("keydown", handleKeyDown)
+    return () => window.removeEventListener("keydown", handleKeyDown)
+  }, [])
+
   return (
     <div className="flex flex-col lg:flex-row gap-4">
       <div className="w-full lg:w-[432px] lg:flex-shrink-0">
-        <div className="relative w-full aspect-[3/4] overflow-hidden">
+        <div
+          className="relative w-full aspect-[3/4] overflow-hidden lg:cursor-default cursor-pointer select-none"
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
+          onClick={() => {
+            if (hasMultipleImages) {
+              goToNext()
+            }
+          }}
+        >
           {activeImage && (
             <Image
               src={activeImage}
@@ -47,7 +98,7 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
             <button
               key={i}
               type="button"
-              onClick={() => setActiveImage(img.url)}
+              onClick={() => setActiveIndex(i)}
               className={getThumbnailClass(img.url)}
               style={{ aspectRatio: "3/4" }}
             >
