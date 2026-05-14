@@ -20,9 +20,9 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
   const activeImage = resolvedImages[activeIndex]?.url ?? null
 
   function getThumbnailClass(imgUrl: string) {
-    const base = "relative h-full w-auto lg:h-auto lg:w-full flex-shrink-0 overflow-hidden transition-opacity"
+    const base = "relative h-full w-auto lg:h-auto lg:w-full flex-shrink-0 overflow-hidden transition-all"
     if (activeImage === imgUrl) return `${base} opacity-100`
-    return `${base} opacity-40 hover:opacity-70`
+    return `${base} brightness-50 hover:brightness-75`
   }
 
   function goToNext() {
