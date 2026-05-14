@@ -22,7 +22,7 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
   function getThumbnailClass(imgUrl: string) {
     const base = "relative h-full w-auto lg:h-auto lg:w-full flex-shrink-0 overflow-hidden transition-all"
     if (activeImage === imgUrl) return `${base} opacity-100`
-    return `${base} brightness-50 hover:brightness-75`
+    return `${base} brightness-75 hover:brightness-100`
   }
 
   function goToNext() {
