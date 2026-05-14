@@ -54,7 +54,11 @@ export default async function ProductPreview({
   )
 
   if (isArchive) {
-    return <div className="group">{inner}</div>
+    return (
+      <LocalizedClientLink href={`/archive/${product.handle}`} className="group">
+        {inner}
+      </LocalizedClientLink>
+    )
   }
 
   return (

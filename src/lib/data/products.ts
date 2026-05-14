@@ -89,10 +89,12 @@ export const listArchiveProducts = async ({
   page = 1,
   limit = 12,
   countryCode,
+  handle,
 }: {
   page?: number
   limit?: number
   countryCode: string
+  handle?: string
 }): Promise<{ products: HttpTypes.StoreProduct[]; count: number }> => {
   const region = await getRegion(countryCode)
   const offset = (page - 1) * limit
@@ -102,9 +104,14 @@ export const listArchiveProducts = async ({
     ...(await getAuthHeaders()),
   }
 
+  let url = `/store/archive?limit=${limit}&offset=${offset}&currency_code=${currency_code}&region_id=${region?.id}`
+  if (handle) {
+    url += `&handle=${handle}`
+  }
+
   return sdk.client
     .fetch<{ products: HttpTypes.StoreProduct[]; count: number }>(
-      `/store/archive?limit=${limit}&offset=${offset}&currency_code=${currency_code}&region_id=${region?.id}`,
+      url,
       {
         method: "GET",
         headers,
