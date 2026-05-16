@@ -23,7 +23,9 @@ export default function NavLinks() {
       <LocalizedClientLink
         href={`/store`}
         className={
-          pathname === `/${countryCode}/store`
+          pathname.startsWith(`/${countryCode}/store`) ||
+          pathname.startsWith(`/${countryCode}/archive`) ||
+          pathname.startsWith(`/${countryCode}/products`)
             ? "font-bold underline underline-offset-8"
             : ""
         }

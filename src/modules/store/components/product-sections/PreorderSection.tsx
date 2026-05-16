@@ -12,7 +12,7 @@ export const PreorderSection: FC<IPreorderSection> = ({ products }) => {
   const backgroundColor = products[0].metadata?.bg_color || 'white'
 
   return (
-    <div className="w-full" style={{ backgroundColor }}>
+    <div className="w-full" style={{ backgroundColor }} data-preorder-section>
       <div className="content-container">
         <h1 className="text-[50px] font-text mt-12">Preorder</h1>
         <p className="font-text text-sm">

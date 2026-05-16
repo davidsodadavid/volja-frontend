@@ -20,9 +20,9 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
   const activeImage = resolvedImages[activeIndex]?.url ?? null
 
   function getThumbnailClass(imgUrl: string) {
-    const base = "relative h-full w-auto lg:h-auto lg:w-full flex-shrink-0 overflow-hidden transition-opacity"
+    const base = "relative h-full w-auto lg:h-auto lg:w-full flex-shrink-0 overflow-hidden transition-all"
     if (activeImage === imgUrl) return `${base} opacity-100`
-    return `${base} opacity-40 hover:opacity-70`
+    return `${base} brightness-75 hover:brightness-100`
   }
 
   function goToNext() {
@@ -91,7 +91,7 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
       </div>
       {hasMultipleImages && (
         <div
-          className="flex gap-3 flex-row overflow-x-auto h-16 lg:flex-col lg:overflow-x-hidden lg:overflow-y-auto lg:h-auto lg:max-h-[540px] lg:w-16 lg:flex-shrink-0 scrollbar-hide"
+          className="flex gap-3 flex-row overflow-x-auto h-16 lg:flex-col lg:overflow-x-hidden lg:overflow-y-auto lg:h-auto lg:max-h-[576px] lg:w-16 lg:flex-shrink-0 scrollbar-hide"
           style={{ scrollbarWidth: "none" }}
         >
           {resolvedImages.map((img, i) => (

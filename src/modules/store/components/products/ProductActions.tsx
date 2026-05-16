@@ -104,11 +104,11 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
             <div className="ml-1 flex gap-2">
               {colorGroups.map(group => (
                 <ColorSwatch
-                  onClick={() => setSelectedColor(group.color)}
+                  onClick={() => {}}
                   key={group.color}
                   value={group.color}
                   selected={group.color === selectedColor}
-                  available={group.available}
+                  available={status !== ProductStatus.BeingMade}
                 />
               ))}
             </div>
@@ -117,9 +117,20 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
 
         {selectedGroup && <div>
             <div className="flex items-center gap-2 flex-wrap mb-3">
-              {selectedGroup.variants.map((vrnt, i) => (
-                <SizeButton key={i} label={vrnt.metadata?.size || 'M'} available={vrnt.available} selected={selectedVariant?.id === vrnt.id} onClick={() => setSelectedVariantId(vrnt.id)} />
-              ))}
+              {["XS", "S", "M", "L", "XL"].map((size) => {
+                const variant = selectedGroup.variants.find(v => v.metadata?.size?.toUpperCase() === size)
+                const available = status !== ProductStatus.BeingMade && (variant?.available ?? false)
+                const selected = variant?.id === selectedVariantId
+                return (
+                  <SizeButton
+                    key={size}
+                    label={size}
+                    available={available}
+                    selected={selected}
+                    onClick={() => {}}
+                  />
+                )
+              })}
             </div>
           {size_chart && <SizeChart size_chart_string={size_chart} />}
           </div>
