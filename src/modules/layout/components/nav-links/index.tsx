@@ -25,7 +25,8 @@ export default function NavLinks() {
         className={
           pathname.startsWith(`/${countryCode}/store`) ||
           pathname.startsWith(`/${countryCode}/archive`) ||
-          pathname.startsWith(`/${countryCode}/products`)
+          pathname.startsWith(`/${countryCode}/products`) ||
+          pathname.startsWith(`/${countryCode}/cart`)
             ? "font-bold underline underline-offset-8"
             : ""
         }
