@@ -144,10 +144,10 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
           <button
             onClick={handleAddToCart}
             disabled={isAdding || !selectedVariant}
-            className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-full disabled:opacity-50 disabled:cursor-not-allowed"
+            className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-[290px] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span className="transition-transform duration-300 group-hover:translate-x-5">{isAdding ? "Adding..." : "Preorder"}</span>
-            <span>&rarr;</span>
+            <span>→</span>
           </button>
         )}
 
@@ -162,14 +162,14 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
           <input
             type="email"
             placeholder="Enter email"
-            className="border border-black mb-2 px-4 py-2 text-[30px] w-full outline-none"
+            className="border border-black mb-2 px-4 py-2 text-[30px] w-[290px] outline-none"
           />
         )}
 
         {status === ProductStatus.BeingMade && (
-          <button className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-full">
+          <button className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-[290px]">
             <span className="transition-transform duration-300 group-hover:translate-x-5">Get Notified</span>
-            <span>&rarr;</span>
+            <span>→</span>
           </button>
         )}
 
@@ -177,10 +177,10 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
           <button
             onClick={handleAddToCart}
             disabled={isAdding || !selectedVariant}
-            className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-full disabled:opacity-50 disabled:cursor-not-allowed"
+            className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-[290px] disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <span className="transition-transform duration-300 group-hover:translate-x-5">{isAdding ? "Adding..." : "Add to cart"}</span>
-            <span>&rarr;</span>
+            <span>→</span>
           </button>
         )}
       </div>

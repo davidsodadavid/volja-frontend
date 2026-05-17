@@ -22,7 +22,7 @@ const ArchiveProductTemplate: React.FC<ArchiveProductTemplateProps> = ({
     <div className="w-full">
       <div className="content-container">
         <div className="w-full py-12">
-          <div className="hidden lg:flex gap-5 justify-between items-start">
+          <div className="hidden lg:flex gap-5 justify-between items-stretch">
             <ProductInfo product={product} />
             <ProductImageGallery
               images={product.images}

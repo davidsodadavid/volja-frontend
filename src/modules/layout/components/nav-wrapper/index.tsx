@@ -20,7 +20,7 @@ export default function NavWrapper({ children, shopBgColor }: NavWrapperProps) {
       if (window.innerWidth >= 1024) {
         setScrolled(window.scrollY > 900)
       } else {
-        setScrolled(true)
+        setScrolled(false)
       }
     }
 
