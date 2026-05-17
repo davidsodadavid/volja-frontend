@@ -27,7 +27,7 @@ export default async function ArchiveProducts({
   const totalPages = Math.ceil(count / PRODUCT_LIMIT)
 
   return (
-    <div className="bg-white w-full">
+    <div className="bg-white w-full" id="archive">
       <div className="content-container pt-20 pb-10">
         <h1 className="text-[50px] font-text">Archive</h1>
         <p className="font-text text-sm mb-6">

@@ -1,6 +1,6 @@
 import { Heading, Text } from "@medusajs/ui"
 
-import InteractiveLink from "@modules/common/components/interactive-link"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 
 const EmptyCartMessage = () => {
   return (
@@ -16,7 +16,10 @@ const EmptyCartMessage = () => {
         the link below to start browsing our products.
       </Text>
       <div>
-        <InteractiveLink href="/store">Explore products</InteractiveLink>
+        <LocalizedClientLink href="/store" className="group bg-black text-white font-display px-4 py-3 text-[30px] flex items-center justify-between w-full sm:w-[400px]">
+          <span className="transition-transform duration-300 group-hover:translate-x-5">Explore products</span>
+          <span>→</span>
+        </LocalizedClientLink>
       </div>
     </div>
   )

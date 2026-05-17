@@ -10,7 +10,7 @@ export const BeingMadeRightNow: FC<IPreorderSection> = ({ products }) => {
   if(products.length === 0) return null
 
   return (
-    <div className="bg-white w-full" data-being-made-section>
+    <div className="bg-white w-full" data-being-made-section id="in-progress">
       <div className="content-container">
         <h1 className="text-[50px] font-text mt-20">In progress</h1>
         <p className="font-text text-sm">
