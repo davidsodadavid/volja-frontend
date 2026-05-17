@@ -35,7 +35,7 @@ interface IProductActions {
   pre_order_date?: string
 }
 
-export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_order_date }) => {
+export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_order_date, originalPrice }) => {
   type ColorGroup = { color: string; available: boolean; variants: typeof variants }
 
   const colorGroups = Object.values(
@@ -90,11 +90,13 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
             )}
             <div className="flex items-baseline gap-3">
               <span className="font-display text-4xl font-bold">
-                {preorderPrice} <span className="text-3xl">€</span>
+                {status === ProductStatus.BeingMade && selectedVariant?.calculated_price?.original_amount ? Math.round(selectedVariant.calculated_price.original_amount) : preorderPrice} <span className="text-3xl">€</span>
               </span>
-              <span className="font-display text-xl line-through opacity-50">
-                {Math.round(preorderPrice + preorderPrice / 10)} €
-              </span>
+              {status !== ProductStatus.BeingMade && (
+                <span className="font-display text-xl line-through opacity-50">
+                  {Math.round(preorderPrice + preorderPrice / 10)} €
+                </span>
+              )}
             </div>
           </div>
         )}
