@@ -92,14 +92,13 @@ export default async function ArchiveProductPage(props: Props) {
     notFound()
   }
 
-  const { products } = await listArchiveProducts({
+  const allProducts = await listArchiveProducts({
     page: 1,
-    limit: 1,
+    limit: 100,
     countryCode: params.countryCode,
-    handle: params.handle,
   })
 
-  const product = products[0]
+  const product = allProducts.products.find(p => p.handle === params.handle)
 
   if (!product) {
     notFound()
