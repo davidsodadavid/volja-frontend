@@ -63,13 +63,19 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
       </Table.Cell>
 
       <Table.Cell className="text-left">
-        <Text
-          className="txt-medium-plus text-ui-fg-base"
-          data-testid="product-title"
-        >
-          {item.product_title}
-        </Text>
-        <LineItemOptions variant={item.variant} data-testid="product-variant" />
+        <div className="flex items-baseline">
+          <span className="w-6 text-center flex-shrink-0 text-[24px]">–</span>
+          <Text
+            className="font-display text-[24px] font-bold text-ui-fg-base"
+            data-testid="product-title"
+          >
+            {item.product_title}
+          </Text>
+        </div>
+        <div className="flex items-baseline">
+          <span className="w-6 text-center flex-shrink-0">–</span>
+          <LineItemOptions variant={item.variant} data-testid="product-variant" />
+        </div>
       </Table.Cell>
 
       {type === "full" && (

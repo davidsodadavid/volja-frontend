@@ -133,7 +133,8 @@ const CartDropdown = ({
                           <div className="flex flex-col flex-1">
                             <div className="flex items-start justify-between">
                               <div className="flex flex-col overflow-ellipsis whitespace-nowrap mr-4 w-[180px]">
-                                <h3 className="text-base-regular overflow-hidden text-ellipsis">
+                                <h3 className="font-display text-[24px] font-bold overflow-hidden text-ellipsis flex items-baseline">
+                                  <span className="w-6 text-center flex-shrink-0">–</span>
                                   <LocalizedClientLink
                                     href={`/products/${item.product_handle}`}
                                     data-testid="product-link"
@@ -141,18 +142,23 @@ const CartDropdown = ({
                                     {item.title}
                                   </LocalizedClientLink>
                                 </h3>
-                                <LineItemOptions
-                                  variant={item.variant}
-                                  data-testid="cart-item-variant"
-                                  data-value={item.variant}
-                                />
-                                <span
-                                  data-testid="cart-item-quantity"
-                                  data-value={item.quantity}
-                                  className="text-xs font-text"
-                                >
-                                  Quantity: {item.quantity}
-                                </span>
+                                <div className="flex items-baseline font-text text-sm">
+                                  <span className="w-6 text-center flex-shrink-0">–</span>
+                                  <LineItemOptions
+                                    variant={item.variant}
+                                    data-testid="cart-item-variant"
+                                    data-value={item.variant}
+                                  />
+                                </div>
+                                <div className="flex items-baseline font-text text-xs">
+                                  <span className="w-6 text-center flex-shrink-0">–</span>
+                                  <span
+                                    data-testid="cart-item-quantity"
+                                    data-value={item.quantity}
+                                  >
+                                    Quantity: {item.quantity}
+                                  </span>
+                                </div>
                               </div>
                               <div className="flex justify-end">
                                 <LineItemPrice
