@@ -133,7 +133,7 @@ const CartDropdown = ({
                           <div className="flex flex-col flex-1">
                             <div className="flex items-start justify-between">
                               <div className="flex flex-col overflow-ellipsis whitespace-nowrap mr-4 w-[180px]">
-                                <h3 className="font-display text-[24px] font-bold overflow-hidden text-ellipsis flex items-baseline">
+                                <h3 className="font-text text-sm font-bold overflow-hidden text-ellipsis flex items-baseline">
                                   <span className="w-6 text-center flex-shrink-0">–</span>
                                   <LocalizedClientLink
                                     href={`/products/${item.product_handle}`}
@@ -159,6 +159,18 @@ const CartDropdown = ({
                                     Quantity: {item.quantity}
                                   </span>
                                 </div>
+                                {item.variant?.metadata?.color && (
+                                  <div className="flex items-baseline font-text text-xs">
+                                    <span className="w-6 text-center flex-shrink-0">–</span>
+                                    <div className="flex items-center">
+                                      <span>Color: </span>
+                                      <div
+                                        className="w-4 h-4 rounded-full border border-black/20 flex-shrink-0 ml-1"
+                                        style={{ backgroundColor: item.variant.metadata.color as string }}
+                                      />
+                                    </div>
+                                  </div>
+                                )}
                               </div>
                               <div className="flex justify-end">
                                 <LineItemPrice

@@ -76,6 +76,18 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
           <span className="w-6 text-center flex-shrink-0">–</span>
           <LineItemOptions variant={item.variant} data-testid="product-variant" />
         </div>
+        {item.variant?.metadata?.color && (
+          <div className="flex items-baseline">
+            <span className="w-6 text-center flex-shrink-0">–</span>
+            <div className="flex items-center">
+              <span className="mr-1">Color:</span>
+              <div
+                className="w-4 h-4 rounded-full border border-black/20 flex-shrink-0"
+                style={{ backgroundColor: item.variant.metadata.color as string }}
+              />
+            </div>
+          </div>
+        )}
       </Table.Cell>
 
       {type === "full" && (
