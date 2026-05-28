@@ -25,9 +25,13 @@ const StoreTemplate = async ({
   const preOrderProducts = await listPreOrderProducts()
 
   const now = new Date()
-  const preorderProducts = preOrderProducts.filter(
-    (p) => new Date(p.custom.pre_order_date) > now
-  )
+  const preorderProducts = preOrderProducts
+    .filter((p) => new Date(p.custom.pre_order_date) > now)
+    .sort(
+      (a, b) =>
+        new Date(a.custom.pre_order_date).getTime() -
+        new Date(b.custom.pre_order_date).getTime()
+    )
   const beingMadeRightNowProducts = preOrderProducts.filter(
     (p) => new Date(p.custom.pre_order_date) <= now
   )
