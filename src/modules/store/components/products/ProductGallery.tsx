@@ -91,7 +91,7 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
       </div>
       {hasMultipleImages && (
         <div
-          className="flex gap-3 flex-row overflow-x-auto h-16 lg:flex-col lg:overflow-x-hidden lg:overflow-y-auto lg:h-auto lg:max-h-[576px] lg:w-16 lg:flex-shrink-0 scrollbar-hide"
+          className="flex gap-3 flex-row overflow-x-auto h-[693.33px] lg:flex-col lg:overflow-x-hidden lg:overflow-y-auto lg:w-16 lg:flex-shrink-0 scrollbar-hide"
           style={{ scrollbarWidth: "none" }}
         >
           {resolvedImages.map((img, i) => (

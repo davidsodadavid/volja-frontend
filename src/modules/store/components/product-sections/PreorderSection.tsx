@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import Image from "next/image"
 import { PreOrderProduct } from "@lib/data/pre-order"
 import { FeaturedProduct } from "@modules/store/components/products/FeaturedProduct"
 
@@ -10,9 +11,19 @@ export const PreorderSection: FC<IPreorderSection> = ({ products }) => {
   if(products.length === 0) return null
 
   const backgroundColor = products[0].metadata?.bg_color || 'white'
+  const heroImages = products[0].images?.slice(-3) ?? []
 
   return (
     <div className="w-full" style={{ backgroundColor }} data-preorder-section id="preorder">
+      {heroImages.length > 0 && (
+        <div className="w-full grid grid-cols-3">
+          {heroImages.map((img, i) => (
+            <div key={i} className="relative w-full h-[50vh] lg:h-[70vh]">
+              <Image src={img.url} alt="" fill className="object-cover" />
+            </div>
+          ))}
+        </div>
+      )}
       <div className="content-container">
         <h1 className="text-[50px] font-text mt-12">Preorder</h1>
         <p className="font-text text-sm">
