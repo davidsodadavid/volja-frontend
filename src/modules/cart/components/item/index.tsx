@@ -66,7 +66,7 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
         <div className="flex items-baseline">
           <span className="w-6 text-center flex-shrink-0 text-[24px]">–</span>
           <Text
-            className="font-display text-[24px] font-bold text-ui-fg-base"
+            className="font-display text-[16px] lg:text-[24px] font-bold text-ui-fg-base"
             data-testid="product-title"
           >
             {item.product_title}
