@@ -28,6 +28,9 @@
       ],
       "@pages/*": [
         "pages/*"
+      ],
+      "@components/*": [
+        "components/*"
       ]
     },
     "plugins": [

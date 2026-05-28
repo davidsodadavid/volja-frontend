@@ -2,6 +2,8 @@ import { getBaseURL } from "@lib/util/env"
 import localFont from "next/font/local"
 import { Metadata } from "next"
 import "styles/globals.css"
+import CookieConsent from "@components/cookie-consent"
+import { CookieConsentProvider } from "@components/cookie-consent/context"
 
 const neueHaasDisplay = localFont({
   src: [
@@ -40,7 +42,10 @@ export default function RootLayout(props: { children: React.ReactNode }) {
   return (
     <html lang="en" data-mode="light">
       <body className={`${neueHaasDisplay.variable} ${neueHaasText.variable}`}>
-        <main className="relative">{props.children}</main>
+        <CookieConsentProvider>
+          <main className="relative">{props.children}</main>
+          <CookieConsent />
+        </CookieConsentProvider>
       </body>
     </html>
   )

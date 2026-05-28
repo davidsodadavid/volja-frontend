@@ -8,6 +8,7 @@ import { PreorderCountdown } from "./PreorderCountdown"
 import { DiagonalSlash } from "@modules/store/components/products/DiagonalSlash"
 import { ColorSwatch } from "@modules/store/components/products/ColorSwatch"
 import { SizeChart } from "@modules/store/components/products/SizeChart"
+import { useCookieConsent } from "@components/cookie-consent/context"
 
 const SizeButton: FC<{ label: string; available: boolean; selected?: boolean; onClick?: () => void }> = ({ label, available, selected, onClick }) => {
   if (!available) {
@@ -53,6 +54,7 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null)
   const [isAdding, setIsAdding] = useState(false)
   const countryCode = useParams().countryCode as string
+  const { hasConsent } = useCookieConsent()
 
   const selectedGroup = colorGroups.find(g => g.color === selectedColor)
 
@@ -75,6 +77,7 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
 
   const handleAddToCart = async () => {
     if (!selectedVariant?.id) return
+    if (!hasConsent) return
     setIsAdding(true)
     await addToCart({ variantId: selectedVariant.id, quantity: 1, countryCode })
     setIsAdding(false)
@@ -145,10 +148,10 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
         {status === ProductStatus.Preorder && (
           <button
             onClick={handleAddToCart}
-            disabled={isAdding || !selectedVariant}
+            disabled={isAdding || !selectedVariant || !hasConsent}
             className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-[290px] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span className="transition-transform duration-300 group-hover:translate-x-5">{isAdding ? "Adding..." : "Preorder"}</span>
+            <span className="transition-transform duration-300 group-hover:translate-x-5">{!hasConsent ? "Accept cookies" : isAdding ? "Adding..." : "Preorder"}</span>
             <span>→</span>
           </button>
         )}
@@ -178,10 +181,10 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
         {status === ProductStatus.Active && (
           <button
             onClick={handleAddToCart}
-            disabled={isAdding || !selectedVariant}
+            disabled={isAdding || !selectedVariant || !hasConsent}
             className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-[290px] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span className="transition-transform duration-300 group-hover:translate-x-5">{isAdding ? "Adding..." : "Add to cart"}</span>
+            <span className="transition-transform duration-300 group-hover:translate-x-5">{!hasConsent ? "Accept cookies" : isAdding ? "Adding..." : "Add to cart"}</span>
             <span>→</span>
           </button>
         )}
