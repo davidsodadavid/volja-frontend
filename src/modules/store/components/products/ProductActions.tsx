@@ -109,7 +109,7 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
             <div className="ml-1 flex gap-2">
               {colorGroups.map(group => (
                 <ColorSwatch
-                  onClick={() => {}}
+                  onClick={() => setSelectedColor(group.color)}
                   key={group.color}
                   value={group.color}
                   selected={group.color === selectedColor}
@@ -132,7 +132,7 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
                     label={size}
                     available={available}
                     selected={selected}
-                    onClick={() => {}}
+                    onClick={() => variant && setSelectedVariantId(variant.id)}
                   />
                 )
               })}
