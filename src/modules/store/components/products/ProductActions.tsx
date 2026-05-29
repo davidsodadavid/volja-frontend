@@ -51,7 +51,12 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
 
   const firstAvailableColor = colorGroups.find(g => g.available)?.color
   const [selectedColor, setSelectedColor] = useState<string | null>(firstAvailableColor || colorGroups[0]?.color || null)
-  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null)
+  const initialGroup = colorGroups.find(g => g.color === (firstAvailableColor || colorGroups[0]?.color))
+  const sizeOrder = ["XS", "S", "M", "L", "XL"]
+  const initialVariant = initialGroup
+    ? sizeOrder.map(s => initialGroup.variants.find(v => v.metadata?.size?.toUpperCase() === s && v.available)).find(Boolean)
+    : null
+  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(initialVariant?.id ?? null)
   const [isAdding, setIsAdding] = useState(false)
   const countryCode = useParams().countryCode as string
   const { hasConsent } = useCookieConsent()
@@ -111,12 +116,11 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
                 <ColorSwatch
                   onClick={() => {
                     setSelectedColor(group.color)
-                    const availableVariants = group.variants.filter(v => v.available)
-                    if (availableVariants.length === 1) {
-                      setSelectedVariantId(availableVariants[0].id)
-                    } else {
-                      setSelectedVariantId(null)
-                    }
+                    const sizeOrder = ["XS", "S", "M", "L", "XL"]
+                    const firstAvailable = sizeOrder
+                      .map(s => group.variants.find(v => v.metadata?.size?.toUpperCase() === s && v.available))
+                      .find(Boolean)
+                    setSelectedVariantId(firstAvailable?.id ?? null)
                   }}
                   key={group.color}
                   value={group.color}
