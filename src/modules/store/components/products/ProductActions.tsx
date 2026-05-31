@@ -97,14 +97,14 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
               <p className="font-text text-sm mb-1">Preorder price:</p>
             )}
             <div className="flex items-baseline gap-3">
-              <span className="font-display text-4xl font-bold">
-                {status === ProductStatus.BeingMade && selectedVariant?.calculated_price?.original_amount ? Math.round(selectedVariant.calculated_price.original_amount) : preorderPrice} <span className="text-3xl">€</span>
-              </span>
               {status !== ProductStatus.BeingMade && (
-                <span className="font-display text-xl line-through opacity-50">
+                <span className="font-display text-4xl line-through opacity-50">
                   {Math.round(preorderPrice + preorderPrice / 10)} €
                 </span>
               )}
+              <span className="font-display text-4xl font-bold">
+                {status === ProductStatus.BeingMade && selectedVariant?.calculated_price?.original_amount ? Math.round(selectedVariant.calculated_price.original_amount) : preorderPrice} <span className="text-3xl">€</span>
+              </span>
             </div>
           </div>
         )}
