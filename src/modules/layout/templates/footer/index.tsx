@@ -1,3 +1,5 @@
+import NewsletterForm from "./newsletter-form"
+
 export default async function Footer() {
   return (
     <footer className="w-full" id="footer">
@@ -48,19 +50,7 @@ export default async function Footer() {
               <p className="font-text text-sm max-w-[180px]">
                 Stay in the loop with new garments. Sign up for my newsletter.
               </p>
-              <div className="flex flex-col gap-2 flex-1">
-                <input
-                  type="email"
-                  placeholder="Enter email"
-                  className="border border-black px-4 py-2 text-[30px] w-full outline-none"
-                />
-                <button className="group bg-black text-white px-4 py-2 text-[30px] flex items-center justify-between w-full">
-                  <span className="transition-transform duration-300 group-hover:translate-x-5">
-                    Subscribe
-                  </span>
-                  <span>&rarr;</span>
-                </button>
-              </div>
+              <NewsletterForm />
             </div>
           </div>
         </div>
