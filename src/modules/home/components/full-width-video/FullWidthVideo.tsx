@@ -6,7 +6,7 @@ interface IFullWidthVideo {
 
 export const FullWidthVideo: FC<IFullWidthVideo> = ({ url }) => {
   return (
-    <div className="relative w-full" style={{ height: "70vh" }}>
+    <div className="relative w-full" style={{ height: "80vh" }}>
       <video
         src={url}
         autoPlay

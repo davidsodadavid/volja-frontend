@@ -8,6 +8,7 @@ import Divider from "@modules/common/components/divider"
 import OptionSelect from "@modules/products/components/product-actions/option-select"
 import { isEqual } from "lodash"
 import { useParams } from "next/navigation"
+import { useCookieConsent } from "@components/cookie-consent/context"
 import { useEffect, useMemo, useRef, useState } from "react"
 import ProductPrice from "../product-price"
 import MobileActions from "./mobile-actions"
@@ -98,9 +99,13 @@ export default function ProductActions({
 
   const inView = useIntersection(actionsRef, "0px")
 
+  const { hasConsent } = useCookieConsent()
+
   // add the selected variant to the cart
   const handleAddToCart = async () => {
     if (!selectedVariant?.id) return null
+
+    if (!hasConsent) return null
 
     setIsAdding(true)
 
@@ -146,7 +151,8 @@ export default function ProductActions({
             !selectedVariant ||
             !!disabled ||
             isAdding ||
-            !isValidVariant
+            !isValidVariant ||
+            !hasConsent
           }
           
           style={{ color: (product.metadata?.colors as { hex: string, name: string }[])?.[0]?.hex ?? "#000" }}
@@ -155,11 +161,13 @@ export default function ProductActions({
           isLoading={isAdding}
           data-testid="add-product-button"
         >
-          {!selectedVariant && !options
-            ? "Select variant"
-            : !inStock || !isValidVariant
+          {!hasConsent
+            ? "Accept cookies"
+            : !selectedVariant && !options
               ? "Select variant"
-              : "PURCHASE"}
+              : !inStock || !isValidVariant
+                ? "Select variant"
+                : "PURCHASE"}
         </Button>
         <MobileActions
           product={product}

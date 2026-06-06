@@ -30,27 +30,18 @@ export default async function Home(props: {
   return (
     <>
       <main className="content-container flex flex-col gap-12 py-20">
-        <FullWidthVideo url="https://www.w3schools.com/html/mov_bbb.mp4" />
+        <FullWidthVideo url="/video/volja.mov" />
         <TextImageRow url="/images/2.png">
           <div className="text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-            tincidunt odio et enim semper iaculis. Fusce vestibulum venenatis
-            purus. Fusce et arcu arcu. Suspendisse lacus lorem, pharetra ut
-            blandit quis, lacinia quis enim. Quisque quis elementum justo, ut
-            dictum dui. Sed eget pellentesque nibh. Integer iaculis ante sed
-            magna ornare fringilla. Aenean sit amet purus quam. Aliquam id
-            pulvinar leo, vel maximus enim.
+           Atelje Volja is a menswear studio and shop at Trubarjeva 55 in Ljubljana. This website runs on a
+monthly preorder system: one or two pieces released at a time, made in a single batch at a lower
+price than the finished stock. Once the preorder closes, remaining pieces are available in the shop
+until they're gone.
           </div>
-        </TextImageRow>
-        <TextImageRow url="/images/3.png">
-          <div className="text-sm">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-            tincidunt odio et enim semper iaculis. Fusce vestibulum venenatis
-            purus. Fusce et arcu arcu. Suspendisse lacus lorem, pharetra ut
-            blandit quis, lacinia quis enim. Quisque quis elementum justo, ut
-            dictum dui. Sed eget pellentesque nibh. Integer iaculis ante sed
-            magna ornare fringilla. Aenean sit amet purus quam. Aliquam id
-            pulvinar leo, vel maximus enim.
+          <div className="text-sm mt-6">
+           We design and produce everything in-house in Ljubljana — simple, well-made menswear with no
+unnecessary complexity. Clean cuts, honest materials, made in small quantities. One considered
+piece at a time, made locally, built to last.
           </div>
         </TextImageRow>
       </main>

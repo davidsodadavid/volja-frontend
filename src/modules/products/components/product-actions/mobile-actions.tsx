@@ -10,6 +10,7 @@ import { getProductPrice } from "@lib/util/get-product-price"
 import OptionSelect from "./option-select"
 import { HttpTypes } from "@medusajs/types"
 import { isSimpleProduct } from "@lib/util/product"
+import { useCookieConsent } from "@components/cookie-consent/context"
 
 type MobileActionsProps = {
   product: HttpTypes.StoreProduct
@@ -35,6 +36,7 @@ const MobileActions: React.FC<MobileActionsProps> = ({
   optionsDisabled,
 }) => {
   const { state, open, close } = useToggleState()
+  const { hasConsent } = useCookieConsent()
 
   const price = getProductPrice({
     product: product,
@@ -118,12 +120,14 @@ const MobileActions: React.FC<MobileActionsProps> = ({
               </Button>}
               <Button
                 onClick={handleAddToCart}
-                disabled={!inStock || !variant}
+                disabled={!inStock || !variant || !hasConsent}
                 className="w-full"
                 isLoading={isAdding}
                 data-testid="mobile-cart-button"
               >
-                {!variant
+                {!hasConsent
+                  ? "Accept cookies"
+                  : !variant
                   ? "Select variant"
                   : !inStock
                   ? "Out of stock"

@@ -8,6 +8,7 @@ import { PreorderCountdown } from "./PreorderCountdown"
 import { DiagonalSlash } from "@modules/store/components/products/DiagonalSlash"
 import { ColorSwatch } from "@modules/store/components/products/ColorSwatch"
 import { SizeChart } from "@modules/store/components/products/SizeChart"
+import { useCookieConsent } from "@components/cookie-consent/context"
 
 const SizeButton: FC<{ label: string; available: boolean; selected?: boolean; onClick?: () => void }> = ({ label, available, selected, onClick }) => {
   if (!available) {
@@ -35,7 +36,7 @@ interface IProductActions {
   pre_order_date?: string
 }
 
-export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_order_date }) => {
+export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_order_date, originalPrice }) => {
   type ColorGroup = { color: string; available: boolean; variants: typeof variants }
 
   const colorGroups = Object.values(
@@ -50,9 +51,15 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
 
   const firstAvailableColor = colorGroups.find(g => g.available)?.color
   const [selectedColor, setSelectedColor] = useState<string | null>(firstAvailableColor || colorGroups[0]?.color || null)
-  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(null)
+  const initialGroup = colorGroups.find(g => g.color === (firstAvailableColor || colorGroups[0]?.color))
+  const sizeOrder = ["XS", "S", "M", "L", "XL"]
+  const initialVariant = initialGroup
+    ? sizeOrder.map(s => initialGroup.variants.find(v => v.metadata?.size?.toUpperCase() === s && v.available)).find(Boolean)
+    : null
+  const [selectedVariantId, setSelectedVariantId] = useState<string | null>(initialVariant?.id ?? null)
   const [isAdding, setIsAdding] = useState(false)
   const countryCode = useParams().countryCode as string
+  const { hasConsent } = useCookieConsent()
 
   const selectedGroup = colorGroups.find(g => g.color === selectedColor)
 
@@ -75,6 +82,7 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
 
   const handleAddToCart = async () => {
     if (!selectedVariant?.id) return
+    if (!hasConsent) return
     setIsAdding(true)
     await addToCart({ variantId: selectedVariant.id, quantity: 1, countryCode })
     setIsAdding(false)
@@ -89,11 +97,13 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
               <p className="font-text text-sm mb-1">Preorder price:</p>
             )}
             <div className="flex items-baseline gap-3">
+              {status !== ProductStatus.BeingMade && (
+                <span className="font-display text-4xl line-through opacity-50">
+                  {Math.round(preorderPrice + preorderPrice / 10)} €
+                </span>
+              )}
               <span className="font-display text-4xl font-bold">
-                {preorderPrice} <span className="text-3xl">€</span>
-              </span>
-              <span className="font-display text-xl line-through opacity-50">
-                {Math.round(preorderPrice + preorderPrice / 10)} €
+                {status === ProductStatus.BeingMade && selectedVariant?.calculated_price?.original_amount ? Math.round(selectedVariant.calculated_price.original_amount) : preorderPrice} <span className="text-3xl">€</span>
               </span>
             </div>
           </div>
@@ -104,7 +114,14 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
             <div className="ml-1 flex gap-2">
               {colorGroups.map(group => (
                 <ColorSwatch
-                  onClick={() => {}}
+                  onClick={() => {
+                    setSelectedColor(group.color)
+                    const sizeOrder = ["XS", "S", "M", "L", "XL"]
+                    const firstAvailable = sizeOrder
+                      .map(s => group.variants.find(v => v.metadata?.size?.toUpperCase() === s && v.available))
+                      .find(Boolean)
+                    setSelectedVariantId(firstAvailable?.id ?? null)
+                  }}
                   key={group.color}
                   value={group.color}
                   selected={group.color === selectedColor}
@@ -127,7 +144,7 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
                     label={size}
                     available={available}
                     selected={selected}
-                    onClick={() => {}}
+                    onClick={() => variant && setSelectedVariantId(variant.id)}
                   />
                 )
               })}
@@ -143,11 +160,11 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
         {status === ProductStatus.Preorder && (
           <button
             onClick={handleAddToCart}
-            disabled={isAdding || !selectedVariant}
-            className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-full disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isAdding || !selectedVariant || !hasConsent}
+            className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-[290px] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span className="transition-transform duration-300 group-hover:translate-x-5">{isAdding ? "Adding..." : "Preorder"}</span>
-            <span>&rarr;</span>
+            <span className="transition-transform duration-300 group-hover:translate-x-5">{!hasConsent ? "Accept cookies" : isAdding ? "Adding..." : "Preorder"}</span>
+            <span>→</span>
           </button>
         )}
 
@@ -162,25 +179,25 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
           <input
             type="email"
             placeholder="Enter email"
-            className="border border-black mb-2 px-4 py-2 text-[30px] w-full outline-none"
+            className="border border-black mb-2 px-4 py-2 text-[30px] w-[290px] outline-none"
           />
         )}
 
         {status === ProductStatus.BeingMade && (
-          <button className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-full">
+          <button className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-[290px]">
             <span className="transition-transform duration-300 group-hover:translate-x-5">Get Notified</span>
-            <span>&rarr;</span>
+            <span>→</span>
           </button>
         )}
 
         {status === ProductStatus.Active && (
           <button
             onClick={handleAddToCart}
-            disabled={isAdding || !selectedVariant}
-            className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-full disabled:opacity-50 disabled:cursor-not-allowed"
+            disabled={isAdding || !selectedVariant || !hasConsent}
+            className="group bg-black text-white font-display px-4 py-2 text-[30px] flex items-center justify-between w-[290px] disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            <span className="transition-transform duration-300 group-hover:translate-x-5">{isAdding ? "Adding..." : "Add to cart"}</span>
-            <span>&rarr;</span>
+            <span className="transition-transform duration-300 group-hover:translate-x-5">{!hasConsent ? "Accept cookies" : isAdding ? "Adding..." : "Add to cart"}</span>
+            <span>→</span>
           </button>
         )}
       </div>

@@ -57,19 +57,37 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
           <Thumbnail
             thumbnail={item.thumbnail}
             images={item.variant?.product?.images}
-            size="square"
+            size="4x5"
           />
         </LocalizedClientLink>
       </Table.Cell>
 
       <Table.Cell className="text-left">
-        <Text
-          className="txt-medium-plus text-ui-fg-base"
-          data-testid="product-title"
-        >
-          {item.product_title}
-        </Text>
-        <LineItemOptions variant={item.variant} data-testid="product-variant" />
+        <div className="flex items-baseline">
+          <span className="w-6 text-center flex-shrink-0 text-[24px]">–</span>
+          <Text
+            className="font-display text-[16px] lg:text-[24px] font-bold text-ui-fg-base"
+            data-testid="product-title"
+          >
+            {item.product_title}
+          </Text>
+        </div>
+        <div className="flex items-baseline">
+          <span className="w-6 text-center flex-shrink-0">–</span>
+          <LineItemOptions variant={item.variant} data-testid="product-variant" />
+        </div>
+        {item.variant?.metadata?.color && (
+          <div className="flex items-baseline">
+            <span className="w-6 text-center flex-shrink-0">–</span>
+            <div className="flex items-center">
+              <span className="mr-1">Color:</span>
+              <div
+                className="w-4 h-4 rounded-full border border-black/20 flex-shrink-0"
+                style={{ backgroundColor: item.variant.metadata.color as string }}
+              />
+            </div>
+          </div>
+        )}
       </Table.Cell>
 
       {type === "full" && (
@@ -79,10 +97,9 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
             <CartItemSelect
               value={item.quantity}
               onChange={(value) => changeQuantity(parseInt(value.target.value))}
-              className="w-14 h-10 p-4"
+              className="w-14"
               data-testid="product-select-button"
             >
-              {/* TODO: Update this with the v2 way of managing inventory */}
               {Array.from(
                 {
                   length: Math.min(maxQuantity, 10),
@@ -93,10 +110,6 @@ const Item = ({ item, type = "full", currencyCode }: ItemProps) => {
                   </option>
                 )
               )}
-
-              <option value={1} key={1}>
-                1
-              </option>
             </CartItemSelect>
             {updating && <Spinner />}
           </div>

@@ -20,9 +20,8 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
   const activeImage = resolvedImages[activeIndex]?.url ?? null
 
   function getThumbnailClass(imgUrl: string) {
-    const base = "relative h-full w-auto lg:h-auto lg:w-full flex-shrink-0 overflow-hidden transition-all"
-    if (activeImage === imgUrl) return `${base} opacity-100`
-    return `${base} brightness-75 hover:brightness-100`
+    const base = "relative h-full w-auto lg:h-auto lg:w-full flex-shrink-0 overflow-hidden"
+    return base
   }
 
   function goToNext() {
@@ -64,7 +63,7 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
 
   return (
     <div className="flex flex-col lg:flex-row gap-4">
-      <div className="w-full lg:w-[432px] lg:flex-shrink-0">
+      <div className="w-full lg:w-[520px] lg:flex-shrink-0">
         <div
           className="relative w-full aspect-[3/4] overflow-hidden lg:cursor-default cursor-pointer select-none"
           onTouchStart={handleTouchStart}
@@ -82,7 +81,7 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
               alt={title}
               fill
               className="object-cover object-center"
-              sizes="(max-width: 1024px) 100vw, 432px"
+              sizes="(max-width: 1024px) 100vw, 520px"
               priority
             />
           )}
@@ -91,7 +90,7 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
       </div>
       {hasMultipleImages && (
         <div
-          className="flex gap-3 flex-row overflow-x-auto h-16 lg:flex-col lg:overflow-x-hidden lg:overflow-y-auto lg:h-auto lg:max-h-[576px] lg:w-16 lg:flex-shrink-0 scrollbar-hide"
+          className="flex gap-3 flex-row overflow-x-auto h-16 lg:flex-col lg:overflow-x-hidden lg:overflow-y-auto lg:h-[693.33px] lg:w-16 lg:flex-shrink-0 scrollbar-hide"
           style={{ scrollbarWidth: "none" }}
         >
           {resolvedImages.map((img, i) => (

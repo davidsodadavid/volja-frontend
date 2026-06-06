@@ -10,8 +10,8 @@ interface IColorSwatch extends React.HTMLAttributes<HTMLButtonElement> {
 export const ColorSwatch: FC<IColorSwatch> = ({ value, available, selected, ...rest }) => {
   if (!available) {
     return (
-      <div className="relative w-7 h-7 rounded-full border border-black/20 overflow-visible">
-        <div className="absolute inset-0 rounded-full opacity-60" style={{ backgroundColor: value }} />
+      <div className="relative w-7 h-7 rounded-full border border-black overflow-visible">
+        <div className="absolute inset-0 rounded-full opacity-60 border border-black" style={{ backgroundColor: value }} />
         <DiagonalSlash />
       </div>
     )
@@ -24,7 +24,7 @@ export const ColorSwatch: FC<IColorSwatch> = ({ value, available, selected, ...r
       className="relative w-7 h-7 rounded-full cursor-pointer"
       style={selected ? { outline: "2px solid black", outlineOffset: "2px" } : undefined}
     >
-      <div className="absolute inset-0 rounded-full" style={{ backgroundColor: value }} />
+      <div className={`absolute inset-0 rounded-full ${selected ? "" : "border border-black"}`} style={{ backgroundColor: value }} />
     </button>
   )
 }

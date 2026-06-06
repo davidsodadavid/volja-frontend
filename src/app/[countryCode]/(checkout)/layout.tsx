@@ -1,5 +1,6 @@
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import ChevronDown from "@modules/common/icons/chevron-down"
+import Image from "next/image"
 
 export default function CheckoutLayout({
   children,
@@ -25,10 +26,15 @@ export default function CheckoutLayout({
           </LocalizedClientLink>
           <LocalizedClientLink
             href="/"
-            className="txt-compact-xlarge-plus text-ui-fg-subtle hover:text-ui-fg-base uppercase"
             data-testid="store-link"
           >
-            Volja
+            <Image
+              src="/images/volja-logo.png"
+              alt="Volja Logo"
+              width={120}
+              height={30}
+              className="object-contain"
+            />
           </LocalizedClientLink>
           <div className="flex-1 basis-0" />
         </nav>
