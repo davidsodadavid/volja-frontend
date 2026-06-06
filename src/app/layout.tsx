@@ -1,4 +1,3 @@
-import RecaptchaProvider from "./recaptcha-provider"
 import { getBaseURL } from "@lib/util/env"
 import localFont from "next/font/local"
 import { Metadata } from "next"
@@ -44,9 +43,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en" data-mode="light">
       <body className={`${neueHaasDisplay.variable} ${neueHaasText.variable}`}>
         <CookieConsentProvider>
-          <RecaptchaProvider>
-            <main className="relative">{props.children}</main>
-          </RecaptchaProvider>
+          <main className="relative">{props.children}</main>
           <CookieConsent />
         </CookieConsentProvider>
       </body>

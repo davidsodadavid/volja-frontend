@@ -15,8 +15,8 @@
     "analyze": "ANALYZE=true next build"
   },
   "dependencies": {
-    "@google-recaptcha/react": "^2.4.2",
     "@headlessui/react": "^2.2.0",
+    "@marsidev/react-turnstile": "^1.5.2",
     "@medusajs/icons": "^2.13.1",
     "@medusajs/js-sdk": "latest",
     "@medusajs/ui": "latest",
