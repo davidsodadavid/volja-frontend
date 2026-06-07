@@ -23,6 +23,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
   }
 
 
+  // zbog type-a (storeproduct variant je ovo, a product action prima PreOrderVariant)
   const newVariants = (product.variants || []).map(v => {
     // @ts-ignore
     const variantClone: PreOrderVariant = {

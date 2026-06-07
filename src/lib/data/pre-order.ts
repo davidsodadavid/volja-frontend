@@ -10,6 +10,13 @@ export type PreOrderVariant = Omit<HttpTypes.StoreProductVariant, "metadata"> & 
     color?: string
     size?: string
   } | null
+  images: HttpTypes.StoreProductImage[]
+}
+
+export type ColorGroup = {
+  color: string
+  available: boolean
+  variants: PreOrderVariant[]
 }
 
 export type PreOrderProduct = Omit<HttpTypes.StoreProduct, "variants"> & {

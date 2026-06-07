@@ -1,7 +1,7 @@
 "use client"
 
 import { FC, useState } from "react"
-import { PreOrderVariant } from "@lib/data/pre-order"
+import { ColorGroup } from "@lib/data/pre-order"
 import { addToCart } from "@lib/data/cart"
 import { useParams } from "next/navigation"
 import { PreorderCountdown } from "./PreorderCountdown"
@@ -31,39 +31,24 @@ const SizeButton: FC<{ label: string; available: boolean; selected?: boolean; on
 }
 
 interface IProductActions {
-  variants: PreOrderVariant[]
+  colorGroups: ColorGroup[]
   size_chart: string
   pre_order_date?: string
+  selectedColorGroup: ColorGroup | null
+  onColorGroupChange: (group: ColorGroup) => void
 }
 
-export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_order_date, originalPrice }) => {
-  type ColorGroup = { color: string; available: boolean; variants: typeof variants }
-
-  const colorGroups = Object.values(
-    variants.reduce<Record<string, ColorGroup>>((acc, variant) => {
-      const color = (variant.metadata?.color as string) || "#4a5e4a"
-      if (!acc[color]) acc[color] = { color, available: false, variants: [] }
-      acc[color].variants.push(variant)
-      acc[color].available = acc[color].variants.some(v => v.available)
-      return acc
-    }, {})
-  )
-
-  const firstAvailableColor = colorGroups.find(g => g.available)?.color
-  const [selectedColor, setSelectedColor] = useState<string | null>(firstAvailableColor || colorGroups[0]?.color || null)
-  const initialGroup = colorGroups.find(g => g.color === (firstAvailableColor || colorGroups[0]?.color))
+export const ProductActions: FC<IProductActions> = ({ colorGroups, size_chart, pre_order_date, selectedColorGroup, onColorGroupChange }) => {
   const sizeOrder = ["XS", "S", "M", "L", "XL"]
-  const initialVariant = initialGroup
-    ? sizeOrder.map(s => initialGroup.variants.find(v => v.metadata?.size?.toUpperCase() === s && v.available)).find(Boolean)
+  const initialVariant = selectedColorGroup
+    ? sizeOrder.map(s => selectedColorGroup.variants.find(v => v.metadata?.size?.toUpperCase() === s && v.available)).find(Boolean)
     : null
   const [selectedVariantId, setSelectedVariantId] = useState<string | null>(initialVariant?.id ?? null)
   const [isAdding, setIsAdding] = useState(false)
   const countryCode = useParams().countryCode as string
   const { hasConsent } = useCookieConsent()
 
-  const selectedGroup = colorGroups.find(g => g.color === selectedColor)
-
-  const selectedVariant = selectedGroup?.variants.find(v => v.id === selectedVariantId) || selectedGroup?.variants[0]
+  const selectedVariant = selectedColorGroup?.variants.find(v => v.id === selectedVariantId) || selectedColorGroup?.variants[0]
 
   const preorderPrice = selectedVariant?.calculated_price?.calculated_amount
 
@@ -109,14 +94,13 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
           </div>
         )}
 
-        {variants && variants.length > 0 && (
+        {colorGroups && colorGroups.length > 0 && (
           <div>
             <div className="ml-1 flex gap-2">
               {colorGroups.map(group => (
                 <ColorSwatch
                   onClick={() => {
-                    setSelectedColor(group.color)
-                    const sizeOrder = ["XS", "S", "M", "L", "XL"]
+                    onColorGroupChange(group)
                     const firstAvailable = sizeOrder
                       .map(s => group.variants.find(v => v.metadata?.size?.toUpperCase() === s && v.available))
                       .find(Boolean)
@@ -124,7 +108,7 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
                   }}
                   key={group.color}
                   value={group.color}
-                  selected={group.color === selectedColor}
+                  selected={group.color === selectedColorGroup?.color}
                   available={status !== ProductStatus.BeingMade}
                 />
               ))}
@@ -132,10 +116,11 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
           </div>
         )}
 
-        {selectedGroup && <div>
+        {selectedColorGroup && (
+          <div>
             <div className="flex items-center gap-2 flex-wrap mb-3">
               {["XS", "S", "M", "L", "XL"].map((size) => {
-                const variant = selectedGroup.variants.find(v => v.metadata?.size?.toUpperCase() === size)
+                const variant = selectedColorGroup.variants.find(v => v.metadata?.size?.toUpperCase() === size)
                 const available = status !== ProductStatus.BeingMade && (variant?.available ?? false)
                 const selected = variant?.id === selectedVariantId
                 return (
@@ -149,9 +134,9 @@ export const ProductActions: FC<IProductActions> = ({ variants, size_chart, pre_
                 )
               })}
             </div>
-          {size_chart && <SizeChart size_chart_string={size_chart} />}
+            {size_chart && <SizeChart size_chart_string={size_chart} />}
           </div>
-        }
+        )}
       </div>
 
       <div className="mt-auto">

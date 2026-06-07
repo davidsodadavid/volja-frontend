@@ -2,15 +2,22 @@
 
 import { FC, useState, useRef, useEffect } from "react"
 import Image from "next/image"
+import { ColorGroup } from "@lib/data/pre-order"
 
 interface IProductImageGallery {
-  images?: { url: string }[] | null
-  thumbnail?: string | null
   title: string
+  selectedColorGroup?: ColorGroup | null
 }
 
-export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnail, title }) => {
-  const resolvedImages = images?.length ? images : thumbnail ? [{ url: thumbnail }] : []
+export const ProductImageGallery: FC<IProductImageGallery> = ({ title, selectedColorGroup }) => {
+  const richestVariant = selectedColorGroup?.variants.reduce(
+    (best, v) => (v.images.length > best.images.length ? v : best),
+    selectedColorGroup.variants[0]
+  )
+
+  const resolvedImages = richestVariant?.images.slice().sort((a, b) => b.rank - a.rank) ?? []
+
+
   const [activeIndex, setActiveIndex] = useState(0)
   const hasMultipleImages = resolvedImages.length > 1
 
@@ -18,11 +25,6 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
   const touchEndX = useRef<number | null>(null)
 
   const activeImage = resolvedImages[activeIndex]?.url ?? null
-
-  function getThumbnailClass(imgUrl: string) {
-    const base = "relative h-full w-auto lg:h-auto lg:w-full flex-shrink-0 overflow-hidden"
-    return base
-  }
 
   function goToNext() {
     setActiveIndex(prev => (prev + 1) % resolvedImages.length)
@@ -98,7 +100,7 @@ export const ProductImageGallery: FC<IProductImageGallery> = ({ images, thumbnai
               key={i}
               type="button"
               onClick={() => setActiveIndex(i)}
-              className={getThumbnailClass(img.url)}
+              className="relative h-full w-auto lg:h-auto lg:w-full flex-shrink-0 overflow-hidden"
               style={{ aspectRatio: "3/4" }}
             >
               <Image src={img.url} alt="" fill className="object-cover" sizes="80px" />
