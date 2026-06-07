@@ -33,12 +33,13 @@ const SizeButton: FC<{ label: string; available: boolean; selected?: boolean; on
 interface IProductActions {
   colorGroups: ColorGroup[]
   size_chart: string
+  state: "PREORDER" | "IN_PROGRESS" | null
   pre_order_date?: string
   selectedColorGroup: ColorGroup | null
   onColorGroupChange: (group: ColorGroup) => void
 }
 
-export const ProductActions: FC<IProductActions> = ({ colorGroups, size_chart, pre_order_date, selectedColorGroup, onColorGroupChange }) => {
+export const ProductActions: FC<IProductActions> = ({ colorGroups, size_chart, state, pre_order_date, selectedColorGroup, onColorGroupChange }) => {
   const sizeOrder = ["XS", "S", "M", "L", "XL"]
   const initialVariant = selectedColorGroup
     ? sizeOrder.map(s => selectedColorGroup.variants.find(v => v.metadata?.size?.toUpperCase() === s && v.available)).find(Boolean)
@@ -58,12 +59,10 @@ export const ProductActions: FC<IProductActions> = ({ colorGroups, size_chart, p
     Active = "active",
   }
 
-  let status: ProductStatus = ProductStatus.Active
-  if (pre_order_date && new Date(pre_order_date) > new Date()) {
-    status = ProductStatus.Preorder
-  } else if (pre_order_date && new Date(pre_order_date) <= new Date()) {
-    status = ProductStatus.BeingMade
-  }
+  const status =
+    state === "PREORDER" ? ProductStatus.Preorder
+    : state === "IN_PROGRESS" ? ProductStatus.BeingMade
+    : ProductStatus.Active
 
   const handleAddToCart = async () => {
     if (!selectedVariant?.id) return

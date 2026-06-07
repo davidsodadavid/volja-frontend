@@ -40,6 +40,7 @@ export const FeaturedProductInteractive: FC<IFeaturedProductInteractive> = ({ pr
           <ProductActions
             colorGroups={colorGroups}
             size_chart={product.metadata?.size_chart as string}
+            state={product.custom.state}
             pre_order_date={product.custom.pre_order_date}
             selectedColorGroup={selectedColorGroup}
             onColorGroupChange={setSelectedColorGroup}
@@ -50,8 +51,7 @@ export const FeaturedProductInteractive: FC<IFeaturedProductInteractive> = ({ pr
       {/* Small: vertical — gallery | description | actions */}
       <div className="flex flex-col gap-6 lg:hidden">
         <ProductImageGallery
-          images={product.images}
-          thumbnail={product.thumbnail}
+          key={selectedColorGroup?.color}
           title={product.title}
           selectedColorGroup={selectedColorGroup}
         />

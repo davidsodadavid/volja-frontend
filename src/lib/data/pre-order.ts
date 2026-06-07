@@ -28,7 +28,27 @@ export type PreOrderProduct = Omit<HttpTypes.StoreProduct, "variants"> & {
   }
   custom: {
     pre_order_date: string
+    state: "PREORDER" | "IN_PROGRESS"
   }
+}
+
+export const getPreOrderProduct = async (
+  handle: string,
+  currency_code = "eur"
+): Promise<PreOrderProduct | null> => {
+  const headers = {
+    ...(await getAuthHeaders()),
+  }
+
+  return sdk.client
+    .fetch<{ product: PreOrderProduct }>(`/store/product/${handle}`, {
+      method: "GET",
+      query: { currency_code },
+      headers,
+      cache: "no-store",
+    })
+    .then(({ product }) => product ?? null)
+    .catch(() => null)
 }
 
 export const listPreOrderProducts = async (): Promise<PreOrderProduct[]> => {
