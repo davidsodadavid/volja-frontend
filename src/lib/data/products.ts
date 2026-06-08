@@ -109,8 +109,6 @@ export const listArchiveProducts = async ({
     url += `&handle=${encodeURIComponent(handle)}`
   }
 
-  console.log("Fetching archive products with URL:", url)
-
   return sdk.client
     .fetch<{ products: HttpTypes.StoreProduct[]; count: number }>(
       url,

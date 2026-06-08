@@ -51,6 +51,8 @@ export const ProductActions: FC<IProductActions> = ({ colorGroups, size_chart, s
 
   const selectedVariant = selectedColorGroup?.variants.find(v => v.id === selectedVariantId) || selectedColorGroup?.variants[0]
 
+
+  const originalAmount = selectedVariant?.calculated_price?.original_amount
   const preorderPrice = selectedVariant?.calculated_price?.calculated_amount
 
   enum ProductStatus {
@@ -83,7 +85,7 @@ export const ProductActions: FC<IProductActions> = ({ colorGroups, size_chart, s
             <div className="flex items-baseline gap-3">
               {status !== ProductStatus.BeingMade && (
                 <span className="font-display text-4xl line-through opacity-50">
-                  {Math.round(preorderPrice + preorderPrice / 10)} €
+                  {originalAmount} €
                 </span>
               )}
               <span className="font-display text-4xl font-bold">

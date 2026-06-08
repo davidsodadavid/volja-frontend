@@ -59,6 +59,7 @@ export const FeaturedProductInteractive: FC<IFeaturedProductInteractive> = ({ pr
         <ProductActions
           colorGroups={colorGroups}
           size_chart={product.metadata?.size_chart as string}
+          state={product.custom.state}
           pre_order_date={product.custom.pre_order_date}
           selectedColorGroup={selectedColorGroup}
           onColorGroupChange={setSelectedColorGroup}
