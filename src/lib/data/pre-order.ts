@@ -9,6 +9,10 @@ export type PreOrderVariant = Omit<HttpTypes.StoreProductVariant, "metadata"> & 
   metadata: {
     color?: string
     size?: string
+    title?: string
+    subtitle?: string
+    material?: string
+    description?: string
   } | null
   images: HttpTypes.StoreProductImage[]
 }

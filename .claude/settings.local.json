@@ -10,7 +10,8 @@
       "Bash(npm run build:*)",
       "Bash(npm run lint:*)",
       "Bash(npm uninstall:*)",
-      "Bash(grep:*)"
+      "Bash(grep:*)",
+      "PowerShell(npx tsc --noEmit 2>&1 | Select-Object -First 30)"
     ]
   },
   "enableAllProjectMcpServers": true,

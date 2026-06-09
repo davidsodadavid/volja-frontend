@@ -1,16 +1,16 @@
 "use client"
 
-import { FC, ReactNode, useState } from "react"
+import { FC, useState } from "react"
 import { ColorGroup, PreOrderProduct } from "@lib/data/pre-order"
 import { ProductImageGallery } from "./ProductGallery"
 import { ProductActions } from "./ProductActions"
+import ProductInfo from "@modules/products/templates/product-info/ProductInfo"
 
 interface IFeaturedProductInteractive {
   product: PreOrderProduct
-  productInfo: ReactNode
 }
 
-export const FeaturedProductInteractive: FC<IFeaturedProductInteractive> = ({ product, productInfo }) => {
+export const FeaturedProductInteractive: FC<IFeaturedProductInteractive> = ({ product }) => {
   const colorGroups: ColorGroup[] = Object.values(
     product.variants.reduce<Record<string, ColorGroup>>((acc, variant) => {
       const color = (variant.metadata?.color as string) || "#4a5e4a"
@@ -23,6 +23,15 @@ export const FeaturedProductInteractive: FC<IFeaturedProductInteractive> = ({ pr
 
   const initialGroup = colorGroups.find(g => g.available) ?? colorGroups[0] ?? null
   const [selectedColorGroup, setSelectedColorGroup] = useState<ColorGroup | null>(initialGroup)
+
+  // picka variant from color group that has something
+  const selectedVariant =
+    selectedColorGroup?.variants.find(
+      v => v.metadata?.title || v.metadata?.subtitle || v.metadata?.material || v.metadata?.description
+    ) ??
+    selectedColorGroup?.variants[0] ??
+    null
+  const productInfo = <ProductInfo product={product} variant={selectedVariant} />
 
   return (
     <>
