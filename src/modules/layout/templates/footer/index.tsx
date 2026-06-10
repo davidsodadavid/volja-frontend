@@ -16,7 +16,6 @@ export default async function Footer() {
               <li className="font-text text-sm">Saturday</li>
               <li className="font-text text-sm">10:00 – 16:00</li>
               <li className="font-text text-sm">Sunday Closed</li>
-              <li className="font-text text-sm">Welcome</li>
             </ul>
           </div>
 

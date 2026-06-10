@@ -37,7 +37,7 @@ export const FeaturedProductInteractive: FC<IFeaturedProductInteractive> = ({ pr
     <>
       {/* Large: 3-column — description | gallery | actions */}
       <div className="hidden lg:flex gap-5 justify-between items-stretch">
-        <div className="w-[280px] flex-shrink-0">{productInfo}</div>
+        <div className="w-[280px] flex-shrink-0 flex flex-col">{productInfo}</div>
         <div className="flex-1 flex justify-center">
           <ProductImageGallery
             key={selectedColorGroup?.color}

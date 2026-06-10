@@ -222,9 +222,9 @@ const CartDropdown = ({
                     <span>0</span>
                   </div>
                   <span>Your shopping bag is empty.</span>
-                  <div>
+                  <div className="w-3/4">
                     <LocalizedClientLink href="/store" className="bg-black text-white font-display px-4 py-3 text-[24px] flex items-center justify-between w-full h-[61px]">
-                      <span className="transition-transform duration-300 group-hover:translate-x-5">Explore products</span>
+                      <span className="flex-1">Explore products</span>
                       <span>→</span>
                     </LocalizedClientLink>
                   </div>

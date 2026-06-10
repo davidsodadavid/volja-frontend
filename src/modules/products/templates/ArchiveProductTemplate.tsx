@@ -34,6 +34,7 @@ const ArchiveProductTemplate: React.FC<ArchiveProductTemplateProps> = ({
               <div className="mt-auto">
                 <p className="w-1/2 mb-4 text-xs">
                   I guess you missed it! I can let you know if it is available in the shop.
+Stay in the loop with new garments. Sign up for my newsletter.
                 </p>
                 <input
                   type="email"
@@ -60,6 +61,7 @@ const ArchiveProductTemplate: React.FC<ArchiveProductTemplateProps> = ({
             <div className="mt-auto">
               <p className="w-1/2 mb-4 text-xs">
                 I guess you missed it! I can let you know if it is available in the shop.
+Stay in the loop with new garments. Sign up for my newsletter.
               </p>
               <input
                 type="email"

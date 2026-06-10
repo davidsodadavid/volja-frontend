@@ -38,7 +38,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
       <div className="content-container">
           <div className="w-full py-12">
             {/* Large: 3-column — description | gallery | actions */}
-            <div className="hidden lg:flex gap-5 justify-between items-start">
+            <div className="hidden lg:flex gap-5 justify-between items-stretch">
               <ProductInfo product={product} />
               <ProductImageGallery
                 images={product.images}

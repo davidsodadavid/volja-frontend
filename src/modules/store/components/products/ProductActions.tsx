@@ -156,7 +156,8 @@ export const ProductActions: FC<IProductActions> = ({ colorGroups, size_chart, s
 
         {status === ProductStatus.BeingMade && (
           <p className="w-1/2 mb-4 text-xs">
-            I guess you missed it! I can let you know if it is available in the
+            I guess you missed it! I can let you know if it is available in the shop.
+Stay in the loop with new garments. Sign up for my newsletter.
             shop.
           </p>
         )}
