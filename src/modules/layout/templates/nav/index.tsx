@@ -21,7 +21,7 @@ export default async function Nav() {
   )
 
   const featuredProduct = activePreorder || beingMadeRightNowProducts
-  const shopBgColor = featuredProduct?.metadata?.bg_color ?? "#ffffff"
+  const shopBgColor = "#ffffff"
 
   return (
     <div className="sticky top-0 inset-x-0 z-50 group">

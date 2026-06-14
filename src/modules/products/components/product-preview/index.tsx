@@ -23,6 +23,8 @@ export default async function ProductPreview({
     product,
   })
 
+  const bgColor = (product.metadata?.bg_color as string) || "#91CAFF"
+
   const inner = (
     <div data-testid="product-wrapper" className="relative overflow-hidden">
       <Thumbnail
@@ -32,7 +34,10 @@ export default async function ProductPreview({
         isFeatured={isFeatured}
         className={thumbnailClassName}
       />
-      <div className="absolute inset-0 bg-atelje-blue opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-between p-4">
+      <div
+        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex flex-col justify-between p-4"
+        style={{ backgroundColor: bgColor }}
+      >
         {/*description*/}
         <div className="flex flex-col gap-y-4 lg:max-w-[280px]">
           <ul className="list-none font-display leading-6 lg:leading-10 w-fit [&>li]:flex [&>li]:gap-[10px] [&>li]:items-baseline [&>li::before]:content-['–'] [&>li::before]:w-4 lg:[&>li::before]:w-6 [&>li::before]:text-center [&>li::before]:flex-shrink-0">
