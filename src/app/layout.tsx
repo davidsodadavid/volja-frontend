@@ -4,6 +4,7 @@ import { Metadata } from "next"
 import "styles/globals.css"
 import CookieConsent from "@components/cookie-consent"
 import { CookieConsentProvider } from "@components/cookie-consent/context"
+import { MaintenanceOverlay } from "@components/maintenance-overlay"
 
 const neueHaasDisplay = localFont({
   src: [
@@ -43,6 +44,7 @@ export default function RootLayout(props: { children: React.ReactNode }) {
     <html lang="en" data-mode="light">
       <body className={`${neueHaasDisplay.variable} ${neueHaasText.variable}`}>
         <CookieConsentProvider>
+          <MaintenanceOverlay />
           <main className="relative">{props.children}</main>
           <CookieConsent />
         </CookieConsentProvider>
