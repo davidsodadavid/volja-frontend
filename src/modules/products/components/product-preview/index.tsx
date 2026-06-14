@@ -43,7 +43,7 @@ export default async function ProductPreview({
           <ul className="list-none font-display leading-6 lg:leading-10 w-fit [&>li]:flex [&>li]:gap-[10px] [&>li]:items-baseline [&>li::before]:content-['–'] [&>li::before]:w-4 lg:[&>li::before]:w-6 [&>li::before]:text-center [&>li::before]:flex-shrink-0">
             <li data-testid="product-title" className="text-[16px] lg:text-[30px] uppercase font-bold">{product.title}</li>
             <li className="text-[16px] lg:text-[30px]">{product.subtitle}</li>
-            <li className="text-[16px] lg:text-[30px]">{product.material}</li>
+            {product.material && <li className="text-[16px] lg:text-[30px]">{product.material}</li>}
             {product.description
               ?.split("\n")
               .map((line, index) => (
