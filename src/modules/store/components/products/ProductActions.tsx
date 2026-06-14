@@ -83,7 +83,7 @@ export const ProductActions: FC<IProductActions> = ({ colorGroups, size_chart, s
               <p className="font-text text-sm mb-1">Preorder price:</p>
             )}
             <div className="flex items-baseline gap-3">
-              {status !== ProductStatus.BeingMade && (
+              {status !== ProductStatus.BeingMade && originalAmount != null && originalAmount !== preorderPrice && (
                 <span className="font-display text-4xl line-through opacity-50">
                   {originalAmount} €
                 </span>
