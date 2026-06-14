@@ -27,7 +27,7 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 }
 
 export default async function ProductPage(props: Props) {
-  const { handle } = await props.params
+  const { handle, countryCode } = await props.params
 
   const product = await getPreOrderProduct(handle)
 
@@ -37,7 +37,7 @@ export default async function ProductPage(props: Props) {
 
   return (
     <div className="content-container">
-      <FeaturedProduct product={product} />
+      <FeaturedProduct product={product} countryCode={countryCode} />
     </div>
   )
 }

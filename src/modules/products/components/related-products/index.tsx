@@ -8,6 +8,15 @@ type RelatedProductsProps = {
   countryCode: string
 }
 
+function shuffleArray<T>(array: T[]): T[] {
+  const shuffled = [...array]
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+  return shuffled
+}
+
 export default async function RelatedProducts({
   product,
   countryCode,
@@ -18,28 +27,22 @@ export default async function RelatedProducts({
     return null
   }
 
-  // edit this function to define your related products logic
-  const queryParams: HttpTypes.StoreProductParams = {}
+  const queryParams: HttpTypes.StoreProductParams = {
+    limit: 100,
+    is_giftcard: false,
+  }
   if (region?.id) {
     queryParams.region_id = region.id
   }
-  if (product.collection_id) {
-    queryParams.collection_id = [product.collection_id]
-  }
-  if (product.tags) {
-    queryParams.tag_id = product.tags
-      .map((t) => t.id)
-      .filter(Boolean) as string[]
-  }
-  queryParams.is_giftcard = false
 
   const products = await listProducts({
     queryParams,
     countryCode,
   }).then(({ response }) => {
-    return response.products.filter(
+    const filtered = response.products.filter(
       (responseProduct) => responseProduct.id !== product.id
     )
+    return shuffleArray(filtered).slice(0, 4)
   })
 
   if (!products.length) {
@@ -47,20 +50,15 @@ export default async function RelatedProducts({
   }
 
   return (
-    <div className="product-page-constraint">
-      <div className="flex flex-col items-center text-center mb-16">
-        <span className="text-base-regular text-gray-600 mb-6">
-          Related products
-        </span>
-        <p className="text-2xl-regular text-ui-fg-base max-w-lg">
-          You might also want to check out these products.
-        </p>
-      </div>
-
-      <ul className="grid grid-cols-2 small:grid-cols-3 medium:grid-cols-4 gap-x-6 gap-y-8">
+    <div className="w-full mt-16">
+      <h2 className="text-[50px] font-text">Related products</h2>
+      <p className="font-text text-sm mb-8">
+        You might also like these products from our collection.
+      </p>
+      <ul className="grid grid-cols-1 2xsmall:grid-cols-2 xsmall:grid-cols-3 small:grid-cols-4 w-full gap-4">
         {products.map((product) => (
           <li key={product.id}>
-            <Product region={region} product={product} />
+            <Product region={region} product={product} thumbnailSize="full" thumbnailClassName="!aspect-[3/4]" />
           </li>
         ))}
       </ul>
