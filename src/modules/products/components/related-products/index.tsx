@@ -1,4 +1,4 @@
-import { listProducts } from "@lib/data/products"
+import { listInStockProducts } from "@lib/data/products"
 import { getRegion } from "@lib/data/regions"
 import { HttpTypes } from "@medusajs/types"
 import Product from "../product-preview"
@@ -27,23 +27,10 @@ export default async function RelatedProducts({
     return null
   }
 
-  const queryParams: HttpTypes.StoreProductParams = {
-    limit: 100,
-    is_giftcard: false,
-  }
-  if (region?.id) {
-    queryParams.region_id = region.id
-  }
-
-  const products = await listProducts({
-    queryParams,
-    countryCode,
-  }).then(({ response }) => {
-    const filtered = response.products.filter(
-      (responseProduct) => responseProduct.id !== product.id
-    )
-    return shuffleArray(filtered).slice(0, 4)
-  })
+  const { products: allProducts } = await listInStockProducts({ page: 1, limit: 100, countryCode })
+  const products = shuffleArray(allProducts.filter(
+    (p) => p.id !== product.id
+  )).slice(0, 4)
 
   if (!products.length) {
     return null
