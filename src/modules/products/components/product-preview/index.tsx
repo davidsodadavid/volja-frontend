@@ -40,14 +40,14 @@ export default async function ProductPreview({
       >
         {/*description*/}
         <div className="flex flex-col gap-y-4 lg:max-w-[280px]">
-          <ul className="list-none font-display leading-6 lg:leading-10 w-fit [&>li]:flex [&>li]:gap-[10px] [&>li]:items-baseline [&>li::before]:content-['–'] [&>li::before]:w-4 lg:[&>li::before]:w-6 [&>li::before]:text-center [&>li::before]:flex-shrink-0">
-            <li data-testid="product-title" className="text-[16px] lg:text-[30px] uppercase font-bold">{product.title}</li>
-            <li className="text-[16px] lg:text-[30px]">{product.subtitle}</li>
-            {product.material && <li className="text-[16px] lg:text-[30px]">{product.material}</li>}
+          <ul className="list-none font-display leading-5 lg:leading-7 xl:leading-8 w-full break-words [&>li]:flex [&>li]:gap-[10px] [&>li]:items-baseline [&>li::before]:content-['–'] [&>li::before]:w-6 [&>li::before]:text-center [&>li::before]:flex-shrink-0">
+            <li data-testid="product-title" className="text-[16px] lg:text-[24px] xl:text-[30px] uppercase font-bold">{product.title}</li>
+            <li className="text-[16px] lg:text-[24px] xl:text-[30px]">{product.subtitle}</li>
+            {product.material && <li className="text-[16px] lg:text-[24px] xl:text-[30px]">{product.material}</li>}
             {product.description
               ?.split("\n")
               .map((line, index) => (
-                <li key={index} className="font-text text-[10px] lg:text-sm">
+                <li key={index} className="font-text text-[10px] lg:text-xs xl:text-sm">
                   {line}
                 </li>
               ))}

@@ -42,7 +42,7 @@ export default async function RelatedProducts({
       <p className="font-text text-sm mb-8">
         You might also like these products from our collection.
       </p>
-      <ul className="grid grid-cols-1 2xsmall:grid-cols-2 xsmall:grid-cols-3 small:grid-cols-4 w-full gap-4">
+      <ul className="grid grid-cols-1 2xsmall:grid-cols-2 min-[768px]:grid-cols-3 small:grid-cols-4 w-full gap-4">
         {products.map((product) => (
           <li key={product.id}>
             <Product region={region} product={product} thumbnailSize="full" thumbnailClassName="!aspect-[3/4]" />

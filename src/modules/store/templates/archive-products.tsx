@@ -35,7 +35,7 @@ export default async function ArchiveProducts({
         </p>
 
         <ul
-          className="grid grid-cols-1 2xsmall:grid-cols-2 xsmall:grid-cols-3 small:grid-cols-4 w-full gap-4"
+          className="grid grid-cols-1 2xsmall:grid-cols-2 min-[768px]:grid-cols-3 small:grid-cols-4 w-full gap-4"
           data-testid="archive-products-list"
         >
           {products.map((p) => (
