@@ -49,7 +49,7 @@ export default async function Footer() {
             {/* Newsletter */}
             <div className="flex flex-col small:flex-row gap-6 small:items-start">
               <p className="font-text text-sm max-w-[180px]">
-                Stay in the loop with new garments. Sign up for my newsletter.
+                Stay in the loop with new garments. Sign up for our newsletter.
               </p>
               <NewsletterForm />
             </div>
