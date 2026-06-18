@@ -11,11 +11,13 @@ export default async function Footer() {
               <li className="text-[30px] font-bold">ATELJE</li>
               <li className="text-[30px] font-bold">SHOP</li>
               <li className="text-[30px]">Trubarjeva 55</li>
+              <li className="text-[30px]">Ljubljana</li>
               <li className="font-text text-sm">Monday to Friday</li>
               <li className="font-text text-sm">13:00 – 18:00</li>
               <li className="font-text text-sm">Saturday</li>
-              <li className="font-text text-sm">10:00 – 16:00</li>
+              <li className="font-text text-sm">10:00 – 14:00</li>
               <li className="font-text text-sm">Sunday Closed</li>
+              <li className="font-text text-sm">+386 31 462 455</li>
             </ul>
           </div>
 
