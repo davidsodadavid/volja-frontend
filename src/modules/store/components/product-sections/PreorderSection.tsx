@@ -16,12 +16,17 @@ export const PreorderSection: FC<IPreorderSection> = ({ products }) => {
   return (
     <div className="w-full" style={{ backgroundColor }} data-preorder-section id="preorder">
       {heroImages.length > 0 && (
-        <div className="w-full grid grid-cols-3">
-          {heroImages.map((img, i) => (
+        <div className="w-full grid grid-cols-2 lg:grid-cols-3">
+          {heroImages.slice(0, 2).map((img, i) => (
             <div key={i} className="relative w-full h-[50vh] lg:h-[70vh]">
               <Image src={img.url} alt="" fill className="object-cover" />
             </div>
           ))}
+          {heroImages[2] && (
+            <div className="hidden lg:block relative w-full h-[50vh] lg:h-[70vh]">
+              <Image src={heroImages[2].url} alt="" fill className="object-cover" />
+            </div>
+          )}
         </div>
       )}
       <div className="content-container">
