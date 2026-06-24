@@ -30,7 +30,7 @@ export default async function Home(props: {
   return (
     <>
       <main className="content-container flex flex-col gap-12 py-20">
-        <FullWidthVideo url="/video/volja.mov" />
+        <FullWidthVideo url="/video/voljahorizontal.mp4" urlVertical="/video/voljavertical.mp4" />
         <TextImageRow url="/images/2.png">
           <div className="text-sm">
            Atelje Volja is a menswear studio and shop at Trubarjeva 55 in Ljubljana. This website runs on a
